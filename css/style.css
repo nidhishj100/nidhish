@@ -1,34 +1,130 @@
-/* CONTACT PAGE */
-.contact {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: white;
+}
+
+/* NAVBAR */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: #020617;
+}
+
+nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.name {
+    font-size: 55px;
+}
+
+/* BUTTON */
+.btn {
+    padding: 12px 24px;
+    background: #38bdf8;
+    color: black;
+    text-decoration: none;
+    margin: 10px;
+    border-radius: 6px;
+}
+
+.btn.outline {
+    background: transparent;
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+}
+
+/* ABOUT */
+.about {
     padding: 80px;
     text-align: center;
 }
 
-.contact h1 {
-    font-size: 40px;
-    margin-bottom: 20px;
+.about-details {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
 }
 
-.contact p {
-    margin: 10px 0;
+/* PROJECTS */
+.project-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
-form {
-    margin-top: 20px;
+.project-card {
+    background: #020617;
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px #38bdf8;
+}
+
+/* SKILLS */
+.skill {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.progress {
+    background: #1e293b;
+    border-radius: 10px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: #38bdf8;
+}
+
+/* CONTACT */
+.contact {
+    padding: 80px;
+    text-align: center;
 }
 
 input, textarea {
     width: 300px;
     padding: 10px;
     margin: 10px;
-    border-radius: 5px;
-    border: none;
 }
 
-button {
-    padding: 10px 20px;
-    background: #38bdf8;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+/* ANIMATION */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
