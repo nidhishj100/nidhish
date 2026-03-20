@@ -1,22 +1,60 @@
-const c=document.getElementById("particles");
-const ctx=c.getContext("2d");
+const text = ["AI Developer", "IoT Engineer", "Web Developer"];
+let i = 0, j = 0, current = "", isDeleting = false;
 
-c.width=window.innerWidth;
-c.height=window.innerHeight;
-
-let p=[];
-for(let i=0;i<80;i++){
-p.push({x:Math.random()*c.width,y:Math.random()*c.height});
+function type() {
+if (i < text.length) {
+if (!isDeleting && j <= text[i].length) {
+current = text[i].substring(0, j++);
+} else {
+isDeleting = true;
+current = text[i].substring(0, j--);
 }
 
-function draw(){
-ctx.clearRect(0,0,c.width,c.height);
-p.forEach(e=>{
-ctx.beginPath();
-ctx.arc(e.x,e.y,2,0,Math.PI*2);
-ctx.fillStyle="cyan";
-ctx.fill();
+if (j == text[i].length) isDeleting = true;
+if (j == 0) {
+isDeleting = false;
+i++;
+}
+
+document.querySelector(".typing").innerHTML = current;
+}
+
+setTimeout(type, 100);
+}
+
+type();
+
+/* PARTICLES */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 100; i++) {
+particles.push({
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+r: Math.random() * 2
 });
+}
+
+function draw() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+particles.forEach(p => {
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+ctx.fillStyle = "#38bdf8";
+ctx.fill();
+
+p.y -= 0.3;
+if (p.y < 0) p.y = canvas.height;
+});
+
 requestAnimationFrame(draw);
 }
+
 draw();
