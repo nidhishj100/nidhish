@@ -1,30 +1,42 @@
-// CURSOR
-const cursor = document.querySelector(".cursor");
+// typing
+const text=["IoT Developer","AI Enthusiast","Robotics Engineer"];
+let i=0,j=0,current="",del=false;
 
-document.addEventListener("mousemove", (e) => {
-    cursor.style.left = e.clientX+"px";
-    cursor.style.top = e.clientY+"px";
-});
+function type(){
+if(i<text.length){
+if(!del && j<=text[i].length){
+current=text[i].substring(0,j++);
+}else{
+del=true;
+current=text[i].substring(0,j--);
+}
+if(j==text[i].length) del=true;
+if(j==0){del=false;i++;}
+document.querySelector(".typing").innerHTML=current;
+}
+setTimeout(type,100);
+}
+type();
 
-// TYPING EFFECT
-const text = ["IoT Developer", "AI Enthusiast", "Robotics Engineer"];
-let i=0, j=0, current="", isDeleting=false;
+// particles
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-function type() {
-    if(i<text.length){
-        if(!isDeleting && j<=text[i].length){
-            current=text[i].substring(0,j++);
-        } else {
-            isDeleting=true;
-            current=text[i].substring(0,j--);
-        }
-
-        if(j==text[i].length) isDeleting=true;
-        if(j==0){ isDeleting=false; i++; }
-
-        document.querySelector(".typing").innerHTML=current;
-    }
-    setTimeout(type,100);
+let p=[];
+for(let i=0;i<60;i++){
+p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:2});
 }
 
-type();
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+p.forEach(e=>{
+ctx.beginPath();
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+ctx.fillStyle="cyan";
+ctx.fill();
+});
+requestAnimationFrame(draw);
+}
+draw();

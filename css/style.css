@@ -1,207 +1,88 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
-
 body {
-    background: radial-gradient(circle at top, #0f172a, #020617);
-    color: white;
-    overflow-x: hidden;
+background:#020617;
+color:white;
+font-family:sans-serif;
+margin:0;
 }
 
-/* CURSOR GLOW */
-.cursor {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(56,189,248,0.25), transparent);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-}
-
-/* NAVBAR */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 80px;
-    background: rgba(2, 6, 23, 0.7);
-    backdrop-filter: blur(12px);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+display:flex;
+justify-content:space-between;
+padding:20px 80px;
+background:#000;
+position:sticky;
+top:0;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* NAV LINKS */
 nav a {
-    margin-left: 30px;
-    text-decoration: none;
-    color: #cbd5f5;
-    font-size: 15px;
-    transition: 0.3s;
+margin-left:20px;
+color:white;
+text-decoration:none;
 }
 
-nav a:hover {
-    color: #38bdf8;
-}
-
-/* HERO SECTION */
+/* HERO */
 .hero {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    text-align: center;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
-/* PROFILE IMAGE */
 .profile {
-    width: 150px;
-    border-radius: 50%;
-    border: 3px solid #38bdf8;
-    box-shadow: 0 0 25px #38bdf8;
-    transition: 0.3s;
+width:150px;
+border-radius:50%;
+box-shadow:0 0 25px cyan;
 }
 
-.profile:hover {
-    transform: scale(1.05);
-}
-
-/* NAME */
-.name {
-    font-size: 65px;
-    font-weight: bold;
-}
-
-/* GRADIENT TEXT (FIXED ✔) */
+/* TEXT */
 .gradient-text {
-    background: linear-gradient(90deg, #38bdf8, #a78bfa, #22c55e);
-    background-size: 200%;
-    -webkit-background-clip: text;
-    background-clip: text; /* ✅ FIXED WARNING */
-    color: transparent;
-    animation: gradientMove 4s linear infinite;
+background:linear-gradient(90deg,cyan,violet);
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
 }
 
-@keyframes gradientMove {
-    0% {background-position: 0%;}
-    100% {background-position: 200%;}
-}
-
-/* TAGLINE */
-.tagline {
-    font-size: 18px;
-    color: #94a3b8;
-}
-
-/* BUTTONS */
-.buttons {
-    margin-top: 20px;
-}
-
-.btn {
-    padding: 12px 28px;
-    background: #38bdf8;
-    color: black;
-    text-decoration: none;
-    margin: 10px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.btn:hover {
-    transform: scale(1.05);
-}
-
-.btn.outline {
-    background: transparent;
-    border: 1px solid #38bdf8;
-    color: #38bdf8;
-}
-
-.btn.outline:hover {
-    background: #38bdf8;
-    color: black;
-}
-
-/* SECTIONS */
-.section {
-    padding: 100px 80px;
-    text-align: center;
-}
-
-/* PROJECT CARDS */
+/* CARDS */
 .cards {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin-top: 30px;
+display:flex;
+gap:20px;
+justify-content:center;
+flex-wrap:wrap;
 }
 
 .card {
-    background: #020617;
-    padding: 20px;
-    border-radius: 12px;
-    width: 250px;
-    transition: 0.4s;
+background:#111;
+padding:20px;
+border-radius:10px;
+transition:0.3s;
 }
 
 .card:hover {
-    transform: translateY(-10px) rotateY(8deg);
-    box-shadow: 0 0 25px #38bdf8;
+transform:scale(1.05);
+box-shadow:0 0 20px cyan;
 }
 
 /* SKILLS */
-.skill {
-    max-width: 500px;
-    margin: 20px auto;
-    text-align: left;
-}
-
 .bar {
-    background: #1e293b;
-    height: 10px;
-    border-radius: 10px;
-    overflow: hidden;
+background:#333;
+height:10px;
 }
-
 .bar div {
-    height: 10px;
-    background: #38bdf8;
+background:cyan;
+height:10px;
 }
 
-/* TYPING TEXT */
-.typing {
-    font-size: 20px;
-    color: #38bdf8;
+/* BUTTON */
+.btn {
+padding:10px 20px;
+background:cyan;
+color:black;
+margin:10px;
 }
 
-/* ANIMATION */
-.fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeUp 1s ease forwards;
-}
-
-.fade-up:nth-child(1) {animation-delay: 0.2s;}
-.fade-up:nth-child(2) {animation-delay: 0.4s;}
-.fade-up:nth-child(3) {animation-delay: 0.6s;}
-.fade-up:nth-child(4) {animation-delay: 0.8s;}
-
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* PARTICLES */
+canvas {
+position:fixed;
+z-index:-1;
 }
