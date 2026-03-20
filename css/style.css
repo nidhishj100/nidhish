@@ -1,32 +1,53 @@
-body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:#020617;
-color:white;
+body {
+    margin: 0;
+    padding-top: 80px; /* 🔥 FIX HEADER OVERLAP */
+
+    font-family: 'Poppins', sans-serif;
+    background: #020617;
+    color: white;
 }
 
-.navbar{
-display:flex;
-justify-content:space-between;
-padding:20px 80px;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(10px);
-position:sticky;
-top:0;
+/* NAVBAR FIXED PERFECT */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background: rgba(2, 6, 23, 0.85);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(56,189,248,0.2);
 }
 
-nav a{
-margin-left:20px;
-color:#cbd5f5;
-text-decoration:none;
+/* CONTAINER FOR ALIGNMENT */
+.nav-container {
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 20px;
 }
 
-nav a:hover{
-color:#38bdf8;
+/* NAV LINKS */
+nav a {
+    margin-left: 25px;
+    color: #cbd5f5;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
-.active{
-color:#38bdf8;
+nav a:hover {
+    color: #38bdf8;
+}
+
+/* ACTIVE LINK */
+nav a.active {
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8;
 }
 
 .hero{
@@ -84,4 +105,30 @@ text-align:center;
 canvas{
 position:fixed;
 z-index:-1;
+}
+/* CONTACT PAGE */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 50px;
+}
+
+.contact-card {
+    background: #111;
+    padding: 25px;
+    border-radius: 12px;
+    width: 250px;
+    text-align: center;
+    transition: 0.4s;
+}
+
+.contact-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 25px #38bdf8;
+}
+
+.contact-card h3 {
+    color: #38bdf8;
 }
