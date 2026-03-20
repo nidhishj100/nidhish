@@ -1,24 +1,3 @@
-// typing
-const text=["IoT Developer","AI Enthusiast","Robotics Engineer"];
-let i=0,j=0,cur="",del=false;
-
-function type(){
-if(i<text.length){
-if(!del && j<=text[i].length){
-cur=text[i].substring(0,j++);
-}else{
-del=true;
-cur=text[i].substring(0,j--);
-}
-if(j==text[i].length) del=true;
-if(j==0){del=false;i++;}
-document.querySelector(".typing").innerHTML=cur;
-}
-setTimeout(type,100);
-}
-type();
-
-// particles
 const c=document.getElementById("particles");
 const ctx=c.getContext("2d");
 
