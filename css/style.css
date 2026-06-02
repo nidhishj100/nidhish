@@ -368,3 +368,21 @@ width:100% !important;
 height:100% !important;
 object-fit:cover !important;
 }
+.page-title{
+font-size:55px;
+text-align:center;
+margin-bottom:20px;
+}
+
+.page-title .number{
+color:var(--accent);
+}
+
+.pro-card h3{
+margin-bottom:12px;
+}
+
+.pro-card p{
+color:var(--muted);
+line-height:1.7;
+}
