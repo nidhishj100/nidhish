@@ -1,44 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Skills</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Matrix // Nidhish J</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <canvas id="particles"></canvas>
 
-<canvas id="particles"></canvas>
+    <header class="navbar">
+        <div class="nav-container">
+            <h1 class="logo glow">NJ<span class="dot">.</span></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html" class="active">Skills</a>
+                <a href="certifications.html">Certifications</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-<header class="navbar">
-<div class="nav-container">
+    <main class="section">
+        <div class="container">
+            <h1 class="glow page-title"><span class="number">//</span> Technical Matrix</h1>
+            <p style="color: var(--text-muted); margin-bottom: 3rem;">A visual assessment of core domain expertise and practical tooling parameters.</p>
 
-<h1 class="logo glow">Nidhish</h1>
+            <div class="grid grid-3">
+                <div class="pro-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>IoT & Architecture</h3>
+                        <span style="color: var(--accent-glow); font-weight: bold; font-family: var(--font-heading);">90%</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
+                        <div style="width: 90%; height: 100%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-glow)); border-radius: 10px;"></div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">Firmware engineering, real-time wireless protocols (MQTT/HTTP), ESP32 arrays, and hardware-software integration loops.</p>
+                </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="projects.html">Projects</a>
-<a href="skills.html" class="active">Skills</a>
-<a href="certifications.html">Certifications</a>
-<a href="contact.html">Contact</a>
-</nav>
+                <div class="pro-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>AI & Deep Learning</h3>
+                        <span style="color: var(--accent-glow); font-weight: bold; font-family: var(--font-heading);">80%</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
+                        <div style="width: 80%; height: 100%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-glow)); border-radius: 10px;"></div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">Neural network training parameters, computer vision tracking models, dataset optimization, and structural predictive arrays.</p>
+                </div>
 
-</div>
-</header>
+                <div class="pro-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Full Stack Development</h3>
+                        <span style="color: var(--accent-glow); font-weight: bold; font-family: var(--font-heading);">85%</span>
+                    </div>
+                    <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
+                        <div style="width: 85%; height: 100%; background: linear-gradient(90deg, var(--accent-purple), var(--accent-glow)); border-radius: 10px;"></div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">Responsive DOM architectures, interactive asynchronous RESTful environments, and low-latency client-side rendering engine setups.</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
-<section class="section">
-<h1 class="glow">Skills</h1>
+    <footer class="footer">
+        <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
+    </footer>
 
-<div class="grid">
-<div class="card">IoT - 90%</div>
-<div class="card">AI/ML - 80%</div>
-<div class="card">Web Dev - 85%</div>
-</div>
-
-</section>
-
-<footer class="footer">© 2026 Nidhish J</footer>
-
-<script src="js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
