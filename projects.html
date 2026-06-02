@@ -1,43 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Projects</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects // Nidhish J</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <canvas id="particles"></canvas>
 
-<canvas id="particles"></canvas>
+    <header class="navbar">
+        <div class="nav-container">
+            <h1 class="logo glow">NJ<span class="dot">.</span></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html" class="active">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="certifications.html">Certifications</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-<header class="navbar">
-<div class="nav-container">
+    <main class="section">
+        <div class="container">
+            <h1 class="glow page-title"><span class="number">//</span> Systems & Deployments</h1>
+            
+            <div class="grid grid-3">
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/project1.jpg" alt="Intelligent Vehicle System">
+                        <div class="project-overlay">
+                            <a href="#" class="view-code-btn">View Source Code ↗</a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>Autonomous Vehicle System</h3>
+                        <p>An intelligent vehicular computing unit utilizing sensor fusion, localized processing, and obstacle avoidance algorithms.</p>
+                        <div class="tech-tags">
+                            <span>ROS2</span>
+                            <span>C++</span>
+                            <span>LiDAR</span>
+                            <span>Python</span>
+                        </div>
+                    </div>
+                </div>
 
-<h1 class="logo glow">Nidhish</h1>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/project2.jpg" alt="AI Robotics Framework">
+                        <div class="project-overlay">
+                            <a href="#" class="view-code-btn">View Repository ↗</a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>AI Robotics Computer Vision</h3>
+                        <p>Real-time edge object detection, segmentation, and motion planning utilizing specialized deep learning models.</p>
+                        <div class="tech-tags">
+                            <span>PyTorch</span>
+                            <span>OpenCV</span>
+                            <span>CUDA</span>
+                            <span>TensorRT</span>
+                        </div>
+                    </div>
+                </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="projects.html" class="active">Projects</a>
-<a href="skills.html">Skills</a>
-<a href="certifications.html">Certifications</a>
-<a href="contact.html">Contact</a>
-</nav>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/project3.jpg" alt="IoT Monitoring Network">
+                        <div class="project-overlay">
+                            <a href="#" class="view-code-btn">View System Demo ↗</a>
+                        </div>
+                    </div>
+                    <div class="project-body">
+                        <h3>Enterprise IoT Monitoring</h3>
+                        <p>High-throughput telemetry pipeline streaming real-time sensor array matrices to a centralized telemetry dashboard.</p>
+                        <div class="tech-tags">
+                            <span>MQTT</span>
+                            <span>NodeJS</span>
+                            <span>InfluxDB</span>
+                            <span>Grafana</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-</div>
-</header>
-<section class="section">
-<h1 class="glow">Projects</h1>
+    <footer class="footer">
+        <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
+    </footer>
 
-<div class="grid">
-<div class="card"><img src="assets/project1.jpg"><h3>Vehicle System</h3></div>
-<div class="card"><img src="assets/project2.jpg"><h3>AI Robotics</h3></div>
-<div class="card"><img src="assets/project3.jpg"><h3>IoT Monitoring</h3></div>
-</div>
-
-</section>
-
-<footer class="footer">© 2026 Nidhish J</footer>
-
-<script src="js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
