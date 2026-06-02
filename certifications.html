@@ -1,44 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Certifications</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications // Nidhish J</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <canvas id="particles"></canvas>
 
-<canvas id="particles"></canvas>
+    <header class="navbar">
+        <div class="nav-container">
+            <h1 class="logo glow">NJ<span class="dot">.</span></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="certifications.html" class="active">Certifications</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-<header class="navbar">
-<div class="nav-container">
+    <main class="section">
+        <div class="container">
+            <h1 class="glow page-title"><span class="number">//</span> Verified Credentials</h1>
+            
+            <div class="grid grid-3">
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/cert1.jpg" alt="AI Specialization Certificate">
+                    </div>
+                    <div class="project-body">
+                        <span style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 600;">TECHNICAL INTERNSHIP</span>
+                        <h3 style="margin: 0.25rem 0 0.75rem 0;">Artificial Intelligence Systems</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Practical hands-on training covering deep neural tuning models and edge computation pipelines.</p>
+                    </div>
+                </div>
 
-<h1 class="logo glow">Nidhish</h1>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/cert2.jpg" alt="IoT Certificate">
+                    </div>
+                    <div class="project-body">
+                        <span style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 600;">PROFESSIONAL CREDENTIAL</span>
+                        <h3 style="margin: 0.25rem 0 0.75rem 0;">IoT Architecture & Networks</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Advanced configuration parameters for sensor mesh arrays and hardware data transport security.</p>
+                    </div>
+                </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="projects.html">Projects</a>
-<a href="skills.html">Skills</a>
-<a href="certifications.html" class="active">Certifications</a>
-<a href="contact.html">Contact</a>
-</nav>
+                <div class="project-card">
+                    <div class="project-img-container">
+                        <img src="assets/cert3.jpg" alt="Hackathon Winner">
+                    </div>
+                    <div class="project-body">
+                        <span style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 600;">COMPETITIVE HONORS</span>
+                        <h3 style="margin: 0.25rem 0 0.75rem 0;">Engineering Hackathon Excellence</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Awarded for building a highly resilient real-time automated system prototype within 48 hours.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-</div>
-</header>
+    <footer class="footer">
+        <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
+    </footer>
 
-<section class="section">
-<h1 class="glow">Certifications</h1>
-
-<div class="grid">
-<div class="card"><img src="assets/cert1.jpg"><h3>AI Internship</h3></div>
-<div class="card"><img src="assets/cert2.jpg"><h3>IoT Cert</h3></div>
-<div class="card"><img src="assets/cert3.jpg"><h3>Hackathon</h3></div>
-</div>
-
-</section>
-
-<footer class="footer">© 2026 Nidhish J</footer>
-
-<script src="js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
