@@ -1,72 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>About</title>
-<link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me // Nidhish J</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
+    <canvas id="particles"></canvas>
 
-<header class="navbar">
-<div class="nav-container">
+    <header class="navbar">
+        <div class="nav-container">
+            <h1 class="logo glow">NJ<span class="dot">.</span></h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="certifications.html">Certifications</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
 
-<h1 class="logo glow">Nidhish</h1>
+    <main class="section">
+        <div class="container">
+            <h1 class="glow page-title"><span class="number">//</span> Biography</h1>
+            
+            <div class="about-wrapper" style="display: grid; grid-template-columns: 1fr; gap: 3rem; margin-top: 2rem;">
+                <div class="pro-card">
+                    <h3>Engineering Philosophy</h3>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">
+                        As a Computer Science and Engineering student, I focus on the intersection of deep learning intelligence and embedded hardware frameworks. I specialize in training robust localized AI models, configuring low-latency telemetry loops for IoT systems, and experimenting with autonomous robotics modules.
+                    </p>
+                </div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html" class="active">About</a>
-<a href="projects.html">Projects</a>
-<a href="skills.html">Skills</a>
-<a href="certifications.html">Certifications</a>
-<a href="contact.html">Contact</a>
-</nav>
+                <div class="grid grid-3">
+                    <div class="pro-card functional">
+                        <div class="card-icon" style="font-size: 2rem; margin-bottom: 1rem;">🎓</div>
+                        <h3>B.E. CSE Student</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Specializing in computational architectures, systems engineering, and advanced data pipelines.</p>
+                    </div>
+                    <div class="pro-card functional">
+                        <div class="card-icon" style="font-size: 2rem; margin-bottom: 1rem;">💡</div>
+                        <h3>Core Research</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Focused on edge automation, computer vision modeling, and interactive micro-controllers.</p>
+                    </div>
+                    <div class="pro-card functional">
+                        <div class="card-icon" style="font-size: 2rem; margin-bottom: 1rem;">⚡</div>
+                        <h3>Agile Execution</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Rapidly adapting to cutting-edge development environments, documentation specs, and hardware environments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-</div>
-</header>
+    <footer class="footer">
+        <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
+    </footer>
 
-<section class="section">
-<h1>About Me</h1>
-<p>Passionate CSE student working on AI, IoT, and Robotics.</p>
-
-<div class="cards">
-<div class="card">🎓 B.E CSE</div>
-<div class="card">💡 AI / IoT</div>
-<div class="card">⚡ Fast Learner</div>
-</div>
-</section>
-
+    <script src="js/script.js"></script>
 </body>
 </html>
-<footer class="footer">
-
-<div class="footer-container">
-
-    <div class="footer-left">
-        <h2>Nidhish J</h2>
-        <p>Passionate CSE Student | AI | IoT | Robotics</p>
-    </div>
-
-    <div class="footer-center">
-        <h3>Quick Links</h3>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="skills.html">Skills</a>
-        <a href="certifications.html">Certifications</a>
-        <a href="contact.html">Contact</a>
-    </div>
-
-    <div class="footer-right">
-        <h3>Contact</h3>
-        <p>Email: nidhishj100@gmail.com</p>
-        <p>Phone: 6282350214</p>
-        <p>Location: India</p>
-    </div>
-
-</div>
-
-<div class="footer-bottom">
-    <p>© 2026 Nidhish J. All Rights Reserved.</p>
-</div>
-
-</footer>
