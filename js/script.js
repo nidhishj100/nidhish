@@ -199,3 +199,43 @@ try {
 ```
 
 });
+const contactForm = document.getElementById("contactForm");
+
+if (contactForm) {
+
+contactForm.addEventListener("submit", async function (e) {
+
+```
+e.preventDefault();
+
+const data = {
+  name: document.getElementById("name").value,
+  email: document.getElementById("email").value,
+  message: document.getElementById("message").value
+};
+
+try {
+
+  const response = await fetch(
+    "https://script.google.com/macros/s/AKfycbz0gav0zDgMkPGdnQkT-OFvcHNcjftQDdIW4G7gJ4x2d0KYWpAABtHzVoZVmif6igTnTw/exec",
+    {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify(data)
+    }
+  );
+
+  alert("Message sent successfully!");
+  contactForm.reset();
+
+} catch (error) {
+
+  console.error(error);
+  alert("Failed to send message");
+
+}
+```
+
+});
+
+}
