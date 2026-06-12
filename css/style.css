@@ -413,3 +413,29 @@ transform:scale(1.05);
 .mentor-card{
 text-align:center;
 }
+.theme-btn{
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:white;
+margin-right:20px;
+}
+
+.light-mode{
+background:#f8fafc !important;
+color:#111827 !important;
+}
+
+.light-mode .navbar{
+background:rgba(255,255,255,.95);
+}
+
+.light-mode .pro-card,
+.light-mode .project-card,
+.light-mode .contact-card,
+.light-mode .mentor-card{
+background:white;
+color:black;
+border:1px solid #ddd;
+}
