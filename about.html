@@ -6,6 +6,263 @@
     <title>About | Nidhish J</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ── About page specific styles ── */
+        .about-intro-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .avatar-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .interest-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: .02em;
+        }
+
+        /* ── Stats grid ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        /* ── Education ── */
+        .edu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .edu-card {
+            border-left: 3px solid var(--accent);
+            padding-left: 1.25rem;
+        }
+
+        .edu-year {
+            font-size: 11px;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--muted);
+            letter-spacing: .06em;
+            margin-bottom: 4px;
+        }
+
+        .edu-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .edu-detail {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── Internships ── */
+        .intern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .intern-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 1.25rem;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .intern-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .intern-icon {
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .intern-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .intern-org {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .intern-date {
+            font-size: 11px;
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+        .intern-desc {
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-top: 4px;
+        }
+
+        /* ── Mentors ── */
+        .mentor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .mentor-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .mentor-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .mentor-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .mentor-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .mentor-role {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── Leadership chips ── */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .leadership-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+
+        .leadership-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .leadership-card p {
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* ── Section heading ── */
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .section-heading::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ── Career objective ── */
+        .objective-text {
+            font-size: 14px;
+            line-height: 1.9;
+            color: var(--muted);
+        }
+    </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
@@ -25,229 +282,178 @@
     </header>
 
     <main class="section">
+        <div class="container">
 
-<div class="container">
+            <!-- ── Page title ── -->
+            <h1 class="page-title">
+                <span class="number">02.</span> About Me
+            </h1>
 
-<h1 class="page-title">
-<span class="number">02.</span> About Me
-</h1>
+            <!-- ── Intro ── -->
+            <div class="pro-card about-intro-card">
+                <div class="avatar-circle">NJ</div>
+                <div>
+                    <h2 style="margin-bottom: 10px;">Hello, I'm Nidhish J 👋</h2>
+                    <p style="font-size: 14px; line-height: 1.9; color: var(--muted);">
+                        Second-year Computer Science Engineering student at Dhanalakshmi Srinivasan College of Engineering, graduating in 2028.
+                        I build things across the full stack — from IoT sensor pipelines to AI-powered web apps —
+                        and enjoy presenting research as much as writing code.
+                    </p>
+                    <div class="interest-tags">
+                        <span class="tag" style="background: rgba(56,139,253,0.15); color: #58a6ff;">Full Stack Dev</span>
+                        <span class="tag" style="background: rgba(188,140,255,0.15); color: #d2a8ff;">AI / ML</span>
+                        <span class="tag" style="background: rgba(63,185,80,0.15); color: #7ee787;">Cloud Computing</span>
+                        <span class="tag" style="background: rgba(255,166,77,0.15); color: #ffa64d;">IoT</span>
+                        <span class="tag" style="background: rgba(255,107,149,0.15); color: #ff6b95;">UI/UX Design</span>
+                    </div>
+                </div>
+            </div>
 
-<div class="pro-card" style="margin-top:30px;">
+            <!-- ── Stats ── -->
+            <div class="section-heading">📊 Quick Stats</div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-num">7.6</div><div class="stat-label">CGPA (Sem 3)</div></div>
+                <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Internships</div></div>
+                <div class="stat-card"><div class="stat-num">25+</div><div class="stat-label">Certifications</div></div>
+                <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Major Projects</div></div>
+                <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Awards</div></div>
+                <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Research Talks</div></div>
+            </div>
 
-<h2>Hello, I'm Nidhish J 👋</h2>
+            <!-- ── Education ── -->
+            <div class="section-heading">🎓 Education</div>
+            <div class="edu-grid">
+                <div class="pro-card edu-card">
+                    <div class="edu-year">AUG 2024 – DEC 2028</div>
+                    <div class="edu-name">Dhanalakshmi Srinivasan College of Engineering</div>
+                    <div class="edu-detail">B.E. in Computer Science & Engineering</div>
+                    <div class="edu-detail">CGPA: 7.6 / 10 &nbsp;·&nbsp; Coimbatore, Tamil Nadu</div>
+                </div>
+                <div class="pro-card edu-card">
+                    <div class="edu-year">2024</div>
+                    <div class="edu-name">Bhavan's Vidya Mandir</div>
+                    <div class="edu-detail">HSC — Mathematics & Computer Science</div>
+                    <div class="edu-detail">Score: 75% &nbsp;·&nbsp; Chithali, Palakkad, Kerala</div>
+                </div>
+            </div>
 
-<p style="margin-top:20px; line-height:1.9; color:var(--muted);">
+            <!-- ── Internships ── -->
+            <div class="section-heading">💼 Internship Experience</div>
+            <div class="intern-grid">
 
-I am a Computer Science Engineering student at
-Dhanalakshmi Srinivasan College of Engineering, Coimbatore,
-graduating in 2028 with a current CGPA of 7.6
+                <div class="intern-card">
+                    <div class="intern-icon">💻</div>
+                    <div class="intern-title">Full Stack Engineer Intern</div>
+                    <div class="intern-org">Make Academy – Pulan AI</div>
+                    <div class="intern-date">June 2026</div>
+                    <div class="intern-desc">Developed and optimized web platform architectures using modern full-stack components and secure API state management pipelines.</div>
+                </div>
 
-My interests include Full Stack Development,
-Artificial Intelligence, Cloud Computing,
-UI/UX Design, Internet of Things (IoT),
-and Software Engineering.
+                <div class="intern-card">
+                    <div class="intern-icon">🎮</div>
+                    <div class="intern-title">Unity Game Development Intern</div>
+                    <div class="intern-org">Fusion VR, Coimbatore</div>
+                    <div class="intern-date">June 2026</div>
+                    <div class="intern-desc">Built interactive 3D environments and game mechanics using Unity Engine and C# scripting for immersive VR experiences.</div>
+                </div>
 
-I enjoy transforming ideas into practical solutions through
-projects, internships, hackathons, research presentations,
-and continuous learning.
+                <div class="intern-card">
+                    <div class="intern-icon">🗄️</div>
+                    <div class="intern-title">Data Management Intern</div>
+                    <div class="intern-org">Institution of Green Engineers</div>
+                    <div class="intern-date">Jan 2026 – Dec 2026</div>
+                    <div class="intern-desc">Streamlined structured and unstructured dataset processing to aid database integrity constraints and rapid asset retrieval.</div>
+                </div>
 
-</p>
+                <div class="intern-card">
+                    <div class="intern-icon">🎨</div>
+                    <div class="intern-title">UI/UX Design Intern</div>
+                    <div class="intern-org">Shrishti Campus, Technopark</div>
+                    <div class="intern-date">Dec 2025</div>
+                    <div class="intern-desc">Engineered mid-to-high fidelity wireframes and interactive mobile layout prototypes using Figma.</div>
+                </div>
 
-</div>
+                <div class="intern-card">
+                    <div class="intern-icon">🤖</div>
+                    <div class="intern-title">AI with Robotics Intern</div>
+                    <div class="intern-org">Robomatiic</div>
+                    <div class="intern-date">Aug 2025</div>
+                    <div class="intern-desc">Integrated ML algorithms with autonomous robotic hardware to develop intelligent automation pipelines and obstacle evasion maps.</div>
+                </div>
 
-<br><br>
+                <div class="intern-card">
+                    <div class="intern-icon">📡</div>
+                    <div class="intern-title">Internet of Things (IoT) Intern</div>
+                    <div class="intern-org">MindfulAI Technologies</div>
+                    <div class="intern-date">Jul 2025</div>
+                    <div class="intern-desc">Designed IoT automation systems using microcontroller architectures, sensor networks, and live cloud-based monitoring dashboards.</div>
+                </div>
 
-<h2 class="section-title">🎓 Education</h2>
+            </div>
 
-<div class="grid">
+            <!-- ── Leadership ── -->
+            <div class="section-heading">🏅 Leadership & Activities</div>
+            <div class="leadership-grid">
+                <div class="leadership-card">
+                    <h3>IGEN Volunteer</h3>
+                    <p>Active volunteer and donor member contributing to social and environmental initiatives.</p>
+                </div>
+                <div class="leadership-card">
+                    <h3>Rajyapuraskar Award</h3>
+                    <p>Received the Governor Scouts and Guides Award for outstanding leadership and community service.</p>
+                </div>
+                <div class="leadership-card">
+                    <h3>Technical Presenter</h3>
+                    <p>Presented research papers and posters at national and international conferences.</p>
+                </div>
+            </div>
 
-<div class="pro-card">
-<h3>Dhanalakshmi Srinivasan College of Engineering</h3>
-<p class="timeline-date">Aug 2024 – Dec 2028</p>
-<p>Bachelor of Engineering in Computer Science and Engineering</p>
-<p>CGPA: 7.6 / 10.0 (Semester 3)</p>
-<p>Coimbatore, Tamil Nadu</p>
-</div>
+            <!-- ── Mentors ── -->
+            <div class="section-heading">🤝 Academic Mentors</div>
+            <div class="pro-card" style="margin-bottom: 3rem;">
+                <div class="mentor-list">
 
-<div class="pro-card">
-<h3>Bhavan's Vidya Mandir</h3>
-<p class="timeline-date">2024</p>
-<p>Higher Secondary Education (Mathematics & Computer Science)</p>
-<p>Score: 75%</p>
-<p>Chithali, Palakkad, Kerala</p>
-</div>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar" style="background: rgba(56,139,253,0.15); color: #58a6ff;">BRK</div>
+                        <div>
+                            <div class="mentor-name">Dr. B. Rajesh Kumar</div>
+                            <div class="mentor-role">Professor & Head of Department, CSE<br>Academic leadership, professional guidance, and support in technical activities and career growth.</div>
+                        </div>
+                    </div>
 
-</div>
-<br><br>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar" style="background: rgba(63,185,80,0.15); color: #7ee787;">SKV</div>
+                        <div>
+                            <div class="mentor-name">Mrs. Sruthy K V</div>
+                            <div class="mentor-role">Assistant Professor & Project Guide, CSE<br>Technical support, project supervision, and research guidance throughout academic projects.</div>
+                        </div>
+                    </div>
 
-<h2 class="section-title">Quick Stats</h2>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar" style="background: rgba(255,166,77,0.15); color: #ffa64d;">MM</div>
+                        <div>
+                            <div class="mentor-name">Monica Murthy</div>
+                            <div class="mentor-role">Psychology Coach & Mentor<br>Confidence building, communication skills, leadership, and professional mindset development.</div>
+                        </div>
+                    </div>
 
-<div class="grid">
+                </div>
+            </div>
 
-<div class="pro-card">
-<h2>7.6</h2>
-<p>CGPA (Semester 3)</p>
-</div>
+            <!-- ── Career Objective ── -->
+            <div class="section-heading">🎯 Career Objective</div>
+            <div class="pro-card" style="margin-bottom: 2rem;">
+                <p class="objective-text">
+                    My goal is to build innovative software solutions that solve real-world problems while continuously expanding
+                    my knowledge in Artificial Intelligence, Cloud Computing, and Full Stack Development.
+                    I aspire to contribute to impactful technology projects and grow into a skilled software engineer
+                    capable of creating scalable, user-centric applications.
+                </p>
+            </div>
 
-<div class="pro-card">
-<h2>6</h2>
-<p>Internships</p>
-</div>
+        </div>
+    </main>
 
-<div class="pro-card">
-<h2>25+</h2>
-<p>Certifications</p>
-</div>
-
-<div class="pro-card">
-<h2>2</h2>
-<p>Major Projects</p>
-</div>
-
-<div class="pro-card">
-<h2>2</h2>
-<p>Awards</p>
-</div>
-
-<div class="pro-card">
-<h2>3+</h2>
-<p>Research Presentations</p>
-</div>
-</div>
-<br><br>
-
-<h2 class="section-title">💼 Professional Internship Experience</h2>
-
-<div class="grid">
-
-<div class="pro-card">
-<img src="images/internships/fullstack.jpg" class="cert-img">
-<h3>Full Stack Engineer Intern</h3>
-<p><strong>Make Academy – Pulan AI</strong></p>
-<p>📅 June 2026</p>
-<p>Developed and optimized web platform architectures using modern full-stack components and secure API state management pipelines.</p>
-</div>
-
-<div class="pro-card">
-<img src="images/internships/unity.jpg" class="cert-img">
-<h3>Unity Game Development Intern</h3>
-<p><strong>Fusion VR, Coimbatore</strong></p>
-<p>📅 June 2026</p>
-<p>Developed interactive 3D environments and game mechanics using Unity Engine and C# scripting for immersive VR experiences.</p>
-</div>
-
-<div class="pro-card">
-<img src="images/internships/data.jpg" class="cert-img">
-<h3>Data Management Intern</h3>
-<p><strong>Institution of Green Engineers</strong></p>
-<p>📅 Jan 2026 – Dec 2026</p>
-<p>Streamlined structured and unstructured dataset processing to aid database integrity constraints and rapid asset retrieval.</p>
-</div>
-
-<div class="pro-card">
-<img src="images/internships/uiux.jpg" class="cert-img">
-<h3>UI/UX Design Intern</h3>
-<p><strong>Shrishti Campus, Technopark</strong></p>
-<p>📅 Dec 2025</p>
-<p>Engineered mid-to-high fidelity wireframes and interactive mobile layout prototypes using Figma.</p>
-</div>
-
-<div class="pro-card">
-<img src="images/internships/robotics.jpg" class="cert-img">
-<h3>AI with Robotics Intern</h3>
-<p><strong>Robomatiic</strong></p>
-<p>📅 Aug 2025</p>
-<p>Integrated ML algorithms with autonomous robotic hardware to develop intelligent automation pipelines and obstacle evasion maps.</p>
-</div>
-
-<div class="pro-card">
-<img src="images/internships/iot.jpg" class="cert-img">
-<h3>Internet of Things (IoT) Intern</h3>
-<p><strong>MindfulAI Technologies</strong></p>
-<p>📅 Jul 2025</p>
-<p>Designed IoT automation systems using microcontroller architectures, sensor networks and live cloud-based monitoring dashboards.</p>
-</div>
-
-</div>
-
-<br><br>
-
-<h2 class="section-title">Leadership & Activities</h2>
-
-<div class="grid">
-
-<div class="pro-card">
-<h3>IGEN Volunteer</h3>
-<p>Active volunteer and donor member contributing to social initiatives.</p>
-</div>
-
-<div class="pro-card">
-<h3>Rajyapuraskar Award</h3>
-<p>Received Governor Scouts and Guides Award for leadership and service.</p>
-</div>
-
-<div class="pro-card">
-<h3>Technical Presenter</h3>
-<p>Presented papers and posters at national and international conferences.</p>
-</div>
-
-</div>
-<div class="pro-card">
-
-<h3>Academic Guidance & Mentorship</h3>
-
-<p>
-Throughout my engineering journey at Dhanalakshmi Srinivasan College of Engineering, Coimbatore, I have been fortunate to receive guidance and support from dedicated mentors who have contributed significantly to my academic, technical, and personal development.
-</p>
-
-<br>
-
-<p>
-<strong>Dr. B. Rajesh Kumar</strong><br>
-Professor & Head of Department, Computer Science and Engineering<br>
-Provided academic leadership, professional guidance, and continuous encouragement in technical activities, project development, and career growth.
-</p>
-
-<br>
-
-<p>
-<strong>Mrs. Sruthy K V</strong><br>
-Assistant Professor, Computer Science and Engineering<br>
-Project Guide who offered valuable technical support, project supervision, and research guidance throughout my academic projects.
-</p>
-
-<br>
-
-<p>
-<strong>Monica Murthy</strong><br>
-Psychology Coach & Mentor<br>
-Guided personal development, confidence building, communication skills, leadership qualities, and professional mindset development.
-</p>
-
-</div>
-<br><br>
-
-<div class="pro-card">
-
-<h2>Career Objective</h2>
-
-<p style="margin-top:20px; line-height:1.9; color:var(--muted);">
-
-My goal is to build innovative software solutions that solve
-real-world problems while continuously expanding my knowledge
-in Artificial Intelligence, Cloud Computing, and Full Stack Development.
-
-I aspire to contribute to impactful technology projects and
-grow into a skilled software engineer capable of creating
-scalable and user-centric applications.
-
-</p>
-
-</div>
-
-</div>
-
-</main>
     <footer class="footer">
         <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
     </footer>
