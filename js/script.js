@@ -1,201 +1,143 @@
-// --- ULTRA-PRO PORTFOLIO PARTICLE ENGINE ---
-const canvas = document.getElementById('particles');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
+// ===========================================================
+// NIDHISH J — PORTFOLIO SCRIPTS
+// Particle field, theme toggle, scroll reveals
+// ===========================================================
 
-    // Handle high-DPI displays dynamically
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+/* ---------- Theme toggle ---------- */
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+
+function applyTheme(theme) {
+    if (theme === 'light') {
+        root.setAttribute('data-theme', 'light');
+        themeToggle.textContent = '☀️';
+    } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const particlesArray = [];
-    const numberOfParticles = Math.min(Math.floor((window.innerWidth * window.innerHeight) / 9000), 120);
-    
-    // Mouse tracking node
-    const mouse = { x: null, y: null, radius: 150 };
-    window.addEventListener('mousemove', (event) => {
-        mouse.x = event.clientX;
-        mouse.y = event.clientY;
-    });
-    window.addEventListener('mouseout', () => {
-        mouse.x = null;
-        mouse.y = null;
-    });
-
-    // Particle Object Blueprint
-    class Particle {
-        constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = (Math.random() - 0.5) * 0.6;
-            this.speedY = (Math.random() - 0.5) * 0.6;
-        }
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-
-            // Screen boundary bounce
-            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-
-            // Mouse interactive push/pull
-            if (mouse.x !== null && mouse.y !== null) {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    const force = (mouse.radius - distance) / mouse.radius;
-                    this.x -= dx / distance * force * 2;
-                    this.y -= dy / distance * force * 2;
-                }
-            }
-        }
-        draw() {
-            ctx.fillStyle = 'rgba(0, 242, 254, 0.7)'; // Cyan glow nodes
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    // Initialize array
-    for (let i = 0; i < numberOfParticles; i++) {
-        particlesArray.push(new Particle());
-    }
-
-    // Draw connecting neural lines
-    function connectParticles() {
-        for (let a = 0; a < particlesArray.length; a++) {
-            for (let b = a; b < particlesArray.length; b++) {
-                let dx = particlesArray[a].x - particlesArray[b].x;
-                let dy = particlesArray[a].y - particlesArray[b].y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 110) {
-                    let opacity = (1 - (distance / 110)) * 0.15;
-                    ctx.strokeStyle = `rgba(0, 242, 254, ${opacity})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
-                }
-            }
-        }
-    }
-
-    // Main animation loop
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-            particlesArray[i].draw();
-        }
-        connectParticles();
-        requestAnimationFrame(animate);
-    }
-    animate();
 }
 
-// --- OPTIONAL HERO TYPING EFFECT ---
-const typingElement = document.querySelector('.typing-subtitle');
-if (typingElement) {
-    const roles = ["Architecting Smart Systems", "AI & Machine Learning Developer", "IoT Solutions Engineer", "Robotics Enthusiast"];
-    let roleIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
 
-    function typeEffect() {
-        const currentRole = roles[roleIndex];
-        if (isDeleting) {
-            typingElement.textContent = currentRole.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingElement.textContent = currentRole.substring(0, charIndex + 1);
-            charIndex++;
-        }
-
-        let typingSpeed = isDeleting ? 40 : 80;
-
-        if (!isDeleting && charIndex === currentRole.length) {
-            typingSpeed = 2000; // Pause at full string
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            roleIndex = (roleIndex + 1) % roles.length;
-            typingSpeed = 500; // Pause before typing next
-        }
-
-        setTimeout(typeEffect, typingSpeed);
-    }
-    setTimeout(typeEffect, 1000);
-}
-const themeBtn = document.getElementById("themeToggle");
-
-if(localStorage.getItem("theme") === "light"){
-document.body.classList.add("light-mode");
-
-if(themeBtn){
-themeBtn.textContent="🌙";
-}
-}
-
-themeBtn?.addEventListener("click",()=>{
-
-document.body.classList.toggle("light-mode");
-
-if(document.body.classList.contains("light-mode")){
-
-localStorage.setItem("theme","light");
-themeBtn.textContent="🌙";
-
-}else{
-
-localStorage.setItem("theme","dark");
-themeBtn.textContent="☀️";
-
-}
-
+themeToggle.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
 });
-const contactForm = document.getElementById("contactForm");
 
-if (contactForm) {
+/* ---------- Particle / circuit-node background ---------- */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animationId;
 
-  contactForm.addEventListener("submit", async function (e) {
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-    e.preventDefault();
+function getAccentColor() {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    return isLight ? 'rgba(14, 154, 102,' : 'rgba(77, 255, 180,';
+}
 
-    const data = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      message: document.getElementById("message").value
-    };
+function createParticles() {
+    const count = Math.min(60, Math.floor((window.innerWidth * window.innerHeight) / 25000));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.5 + 0.5
+        });
+    }
+}
 
-    try {
+function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const accent = getAccentColor();
+    const maxDist = 140;
 
-      await fetch(
-        "https://script.google.com/macros/s/AKfycbz0gav0zDgMkPGdnQkT-OFvcHNcjftQDdIW4G7gJ4x2d0KYWpAABtHzVoZVmif6igTnTw/exec",
-        {
-          method: "POST",
-          mode: "no-cors",
-          body: JSON.stringify(data)
+    for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDist) {
+                ctx.strokeStyle = `${accent} ${(1 - dist / maxDist) * 0.12})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.stroke();
+            }
         }
-      );
 
-      alert("Message Sent Successfully!");
-      contactForm.reset();
-
-    } catch (error) {
-
-      console.error(error);
-      alert("Failed to Send Message");
-
+        ctx.fillStyle = `${accent} 0.35)`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
     }
 
-  });
+    animationId = requestAnimationFrame(drawParticles);
+}
 
+function initParticles() {
+    resizeCanvas();
+    createParticles();
+    if (animationId) cancelAnimationFrame(animationId);
+    drawParticles();
+}
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReducedMotion) {
+    initParticles();
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createParticles();
+    });
+} else {
+    resizeCanvas();
+}
+
+/* ---------- Scroll reveal for cards & timeline ---------- */
+const revealTargets = document.querySelectorAll('.pro-card, .timeline-item, .cta-title, .cta-sub');
+
+revealTargets.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+revealTargets.forEach(el => observer.observe(el));
+
+if (prefersReducedMotion) {
+    revealTargets.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
+    });
 }
