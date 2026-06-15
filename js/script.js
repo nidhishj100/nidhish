@@ -141,3 +141,55 @@ if (prefersReducedMotion) {
         el.style.transition = 'none';
     });
 }
+// ===================================
+// HERO TYPING EFFECT
+// ===================================
+
+const typingElement = document.querySelector('.typing-subtitle');
+
+if (typingElement) {
+
+    const roles = [
+        "Full Stack Developer",
+        "AI Enthusiast",
+        "UI/UX Designer",
+        "Cloud Computing Learner",
+        "IoT Developer"
+    ];
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+
+        const currentRole = roles[roleIndex];
+
+        if (isDeleting) {
+            typingElement.textContent =
+                currentRole.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingElement.textContent =
+                currentRole.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let speed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            speed = 1800;
+            isDeleting = true;
+        }
+
+        else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            speed = 500;
+        }
+
+        setTimeout(typeEffect, speed);
+    }
+
+    typeEffect();
+}
