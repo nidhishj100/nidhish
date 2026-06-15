@@ -1,253 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nidhish J | Computer Science Engineering Student | Full Stack Developer</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+// ===========================================================
+// NIDHISH J — PORTFOLIO SCRIPTS
+// Particle field, theme toggle, scroll reveals
+// ===========================================================
 
-    <canvas id="particles"></canvas>
+/* ---------- Theme toggle ---------- */
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
 
-    <header class="navbar">
-    <div class="nav-container">
+function applyTheme(theme) {
+    if (theme === 'light') {
+        root.setAttribute('data-theme', 'light');
+        themeToggle.textContent = '☀️';
+    } else {
+        root.removeAttribute('data-theme');
+        themeToggle.textContent = '🌙';
+    }
+}
 
-        <h1 class="logo glow">
-            NJ<span class="dot">.</span>
-        </h1>
+const savedTheme = localStorage.getItem('theme') || 'dark';
+applyTheme(savedTheme);
 
-        <nav>
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="skills.html">Skills</a>
-            <a href="certifications.html">Certifications</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+themeToggle.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+});
 
-        <button id="themeToggle" class="theme-btn">
-            🌙
-        </button>
+/* ---------- Particle / circuit-node background ---------- */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let animationId;
 
-    </div>
-</header>
-        </div>
-    </header>
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
-    <main>
-       <section class="hero-section">
+function getAccentColor() {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    return isLight ? 'rgba(14, 154, 102,' : 'rgba(77, 255, 180,';
+}
 
-<div class="container">
+function createParticles() {
+    const count = Math.min(60, Math.floor((window.innerWidth * window.innerHeight) / 25000));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.5 + 0.5
+        });
+    }
+}
 
-<div class="hero-container">
+function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const accent = getAccentColor();
+    const maxDist = 140;
 
-<div class="hero-left">
+    for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
 
-<span class="badge">
-🚀 Computer Science Engineering Student
-</span>
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-<h1 class="main-title">
-Nidhish <span class="highlight">J</span>
-</h1>
+        for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < maxDist) {
+                ctx.strokeStyle = `${accent} ${(1 - dist / maxDist) * 0.12})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(q.x, q.y);
+                ctx.stroke();
+            }
+        }
 
-<h2 class="typing-subtitle">
-Full Stack Developer • AI Enthusiast • UI/UX Designer
-</h2>
+        ctx.fillStyle = `${accent} 0.35)`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
 
-<p class="tagline">
-Passionate Computer Science Engineering student at
-Dhanalakshmi Srinivasan College of Engineering, Coimbatore.
+    animationId = requestAnimationFrame(drawParticles);
+}
 
-Focused on Full Stack Development, Artificial Intelligence,
-Cloud Computing, UI/UX Design, and building impactful
-technology solutions for real-world problems.
+function initParticles() {
+    resizeCanvas();
+    createParticles();
+    if (animationId) cancelAnimationFrame(animationId);
+    drawParticles();
+}
 
-CGPA: 8.0 | Graduation Year: 2026
-</p>
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<div class="hero-cta">
+if (!prefersReducedMotion) {
+    initParticles();
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createParticles();
+    });
+} else {
+    resizeCanvas();
+}
 
-<a href="projects.html" class="btn btn-primary">
-🚀 View Projects
-</a>
+/* ---------- Scroll reveal for cards & timeline ---------- */
+const revealTargets = document.querySelectorAll('.pro-card, .timeline-item, .cta-title, .cta-sub');
 
-<a href="https://drive.google.com/file/d/1MDJvNUyQqDSdJSYIswV5mEea7pzrSSZ8/view?usp=sharing"
-target="_blank"
-class="btn btn-secondary">
-📄 Resume
-</a>
+revealTargets.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+});
 
-<a href="https://github.com/nidhishj100"
-target="_blank"
-class="btn btn-secondary">
-💻 GitHub
-</a>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
 
-<a href="https://www.linkedin.com/in/nidhishj100"
-target="_blank"
-class="btn btn-secondary">
-🔗 LinkedIn
-</a>
+revealTargets.forEach(el => observer.observe(el));
 
-</div>
-
-</div>
-
-<div class="hero-right">
-
-<div class="profile-frame">
-
-<img src="nidhish-profile.jpg"
-alt="Nidhish J"
-class="profile-img">
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-        <section class="section">
-            <div class="container">
-                <h2 class="section-title"><span class="number">01.</span> Core Domains</h2>
-                <div class="grid grid-3">
-                    <div class="pro-card functional">
-                        <div class="card-icon">🧠</div>
-                        <h3>AI / Deep Learning</h3>
-                        <p>Designing advanced computer vision frameworks, neural architectures, and intelligent predictive data models.</p>
-                    </div>
-                    <div class="pro-card functional">
-                        <div class="card-icon">🌐</div>
-                        <h3>IoT & Edge Computing</h3>
-                        <p>Architecting smart device networks, real-time telemetry systems, and custom firmware integrations.</p>
-                    </div>
-                    <div class="pro-card functional">
-                        <div class="card-icon">🤖</div>
-                        <h3>Robotics Engineering</h3>
-                        <p>Developing autonomous kinematics, sensor fusion algorithms, and interactive hardware platforms.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-Professional Experience
-</h2>
-
-<div class="grid">
-
-<div class="pro-card">
-<h3>Project Data Management Intern</h3>
-<p>IGEN • 1 Year</p>
-</div>
-
-<div class="pro-card">
-<h3>UI/UX Design Intern</h3>
-<p>Shrishti Campus Technopark • 15 Days</p>
-</div>
-
-<div class="pro-card">
-<h3>AI & Robotics Intern</h3>
-<p>Robomatic, Coimbatore</p>
-</div>
-
-<div class="pro-card">
-<h3>IoT Intern</h3>
-<p>Industrial Training Program</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="section">
-
-<div class="container">
-
-<h2 class="section-title">
-Achievements
-</h2>
-
-<div class="grid">
-
-<div class="pro-card">
-🏆 First Prize – Paper Presentation
-</div>
-
-<div class="pro-card">
-🏆 First Prize – Poster Presentation
-</div>
-
-<div class="pro-card">
-🌍 International Conference Participant
-</div>
-
-<div class="pro-card">
-🎓 National Conference Participant
-</div>
-
-<div class="pro-card">
-⚡ 2 Hackathon Participations
-</div>
-
-<div class="pro-card">
-☁️ NPTEL Cloud Computing Certified
-</div>
-
-<div class="pro-card">
-🧭 Rajyapuraskar Governor Scouts & Guides Award
-</div>
-
-<div class="pro-card">
-🤝 IGEN Volunteer & Donor Member
-</div>
-
-</div>
-
-</div>
-
-</section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-left">
-                <h2>Nidhish J<span class="dot">.</span></h2>
-                <p>Computer Science Engineering Student | Full Stack Developer | AI Enthusiast</p>
-            </div>
-            <div class="footer-center">
-                <h3>Navigation</h3>
-                <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About</a>
-                    <a href="projects.html">Projects</a>
-                </div>
-            </div>
-            <div class="footer-right">
-                <h3>Terminal</h3>
-                <p>nidhishj100@gmail.com</p>
-                <p>Kerala , Tamil Nadu || India</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Nidhish J | All Rights Reserved</p>
-        </div>
-    </footer>
-
-    <script src="js/script.js"></script>
-</body>
-</html>
+if (prefersReducedMotion) {
+    revealTargets.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
+    });
+}
