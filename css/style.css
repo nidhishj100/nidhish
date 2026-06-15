@@ -439,3 +439,94 @@ background:white;
 color:black;
 border:1px solid #ddd;
 }
+/* ======================
+   MOBILE RESPONSIVE FIX
+   ====================== */
+
+@media screen and (max-width:768px){
+
+/* Navbar */
+.nav-container{
+flex-direction:column;
+padding:15px;
+gap:15px;
+}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:12px;
+}
+
+nav a{
+font-size:14px;
+}
+
+/* Logo */
+.logo{
+font-size:24px;
+}
+
+/* Titles */
+.main-title{
+font-size:38px !important;
+}
+
+.page-title{
+font-size:34px !important;
+}
+
+.typing-subtitle{
+font-size:18px;
+}
+
+/* Hero */
+.hero-container{
+grid-template-columns:1fr;
+text-align:center;
+gap:30px;
+}
+
+.profile-frame{
+width:220px !important;
+height:220px !important;
+}
+
+/* Sections */
+.section{
+padding:60px 0;
+}
+
+/* Cards */
+.grid,
+.grid-3,
+.contact-container{
+grid-template-columns:1fr !important;
+}
+
+/* Buttons */
+.hero-cta{
+justify-content:center;
+}
+
+/* Footer */
+.footer-container{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+/* Contact Form */
+#contactForm input,
+#contactForm textarea{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+}
+
+/* Prevent horizontal scrolling */
+body{
+overflow-x:hidden;
+}
+
+}
