@@ -333,6 +333,7 @@ nav a.active, nav a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center; /* Default fallback alignment */
   transition: transform 0.5s ease;
 }
 .profile-frame:hover .profile-img { transform: scale(1.06); }
@@ -446,10 +447,10 @@ nav a.active, nav a:hover {
 .footer p { font-size: 14px; color: var(--muted); }
 
 /* ── HARDWARE ACCELERATED ANIMATION CONTROLS ── */
-@media (max-width: 868px) {
-  /* Increase padding-top to push the entire hero section below the navbar */
-  body {
-    padding-top: 180px !important; 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
@@ -466,8 +467,8 @@ nav a.active, nav a:hover {
 /* ── CRITICAL MOBILE COMPATIBILITY HOOK ── */
 @media (max-width: 868px) {
   body {
-    /* CRITICAL FIX: Higher top padding pushes pages down past mobile wrap navbar height */
-    padding-top: 130px !important; 
+    /* FIX: Clear header room preventing mobile menu overlap cutting off pages */
+    padding-top: 140px !important; 
   }
 
   /* Kill trailing desktop indicators to allow normal phone tap speeds */
@@ -480,7 +481,7 @@ nav a.active, nav a:hover {
 
   .nav-container {
     padding: 12px 16px;
-    flex-wrap: wrap; /* Allows menu nodes to wrap layout on extremely tiny mobile devices */
+    flex-wrap: wrap; 
     justify-content: center;
     gap: 10px;
   }
@@ -497,20 +498,36 @@ nav a.active, nav a:hover {
   }
 
   .section {
-    padding: 20px 0 40px; /* Reduces extra margins on mobile to utilize viewport space */
+    padding: 10px 0 30px; 
   }
 
   .hero-container {
-    flex-direction: column-reverse;
+    flex-direction: column-reverse; /* Places profile image above text titles */
     text-align: center;
-    gap: 32px;
+    gap: 24px;
   }
 
   .hero-left, .hero-right {
     width: 100%;
   }
 
-  /* Font compression fixes overlap styling seen in the screenshot */
+  .hero-right {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* CRITICAL FACE ALIGNMENT RE-CROP PROTECTION */
+  .profile-frame {
+    width: 210px !important;
+    height: 210px !important;
+    margin: 0 auto;
+  }
+
+  .profile-img {
+    /* Shifts position to target upper framing bounds so your face stays centered */
+    object-position: center 15% !important; 
+  }
+
   .main-title, .page-title, .section-title {
     font-size: 28px !important;
     line-height: 1.2;
@@ -539,11 +556,6 @@ nav a.active, nav a:hover {
     width: 100%;
     justify-content: center;
     padding: 14px 20px;
-  }
-
-  .profile-frame {
-    width: 200px;
-    height: 200px;
   }
 }
 
