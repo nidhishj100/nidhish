@@ -1,18 +1,18 @@
 // ===========================================================
-// NIDHISH J — TOTAL PORTFOLIO PERFORMANCE MOTOR
+// NIDHISH J — PORTFOLIO RUNTIME ENGINE (MOBILE GUARD INTEGRATED)
 // ===========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── MEDIA DETECTION DEVICE GUARD
+    // ── MOBILE LAYOUT THRESHOLD DETECTION GUARD
     const isMobileDevice = window.matchMedia('(max-width: 868px)');
 
-    // ── 1. INJECT SCROLL VALUE METRIC IN DOM TOP STACK
+    // ── 1. INJECT SCROLL BAR INDICATOR INTO THE DOM
     const progressBarNode = document.createElement('div');
     progressBarNode.id = 'progressBar';
     document.body.prepend(progressBarNode);
 
-    // ── 2. INJECT TRAILING CURSOR NODES (DESKTOP INTERNALS ONLY)
+    // ── 2. INJECT DESKTOP POINTER DOT & RING NODES
     const dotCursorElement = document.createElement('div');
     const ringCursorElement = document.createElement('div');
     dotCursorElement.id = 'cursor-dot';
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(dotCursorElement);
     document.body.appendChild(ringCursorElement);
 
-    // ── 3. RUNTIME GLOBAL THEME CONTROLLER
+    // ── 3. RUNTIME THEME COMPILER LAYER
     const themeToggleBtn = document.getElementById('themeToggle');
     const rootElement = document.documentElement;
 
@@ -45,12 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── 4. DESKTOP ONLY LERP POINTER CONTROLLER ENGINE
+    // ── 4. SMOOTH LERP DESKTOP POINTER TRAILING CONTROLLER
     let currentMouseX = 0, currentMouseY = 0;
     let ringLerpX = 0, ringLerpY = 0;
 
     window.addEventListener('mousemove', (event) => {
-        if (isMobileDevice.matches) return; // Immediate touch termination bypass
+        if (isMobileDevice.matches) return; // Prevent mobile coordinates tracking loop injection
 
         currentMouseX = event.clientX;
         currentMouseY = event.clientY;
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(interpolationLoop);
 
-    // Universal cursor tracking feedback binders
+    // Active pointer scaling binders for interactive nodes
     const interactiveTargets = document.querySelectorAll('a, button, .pro-card, .project-card, .contact-card, #themeToggle');
     interactiveTargets.forEach(element => {
         element.addEventListener('mouseenter', () => {
@@ -82,10 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ── 5. MAGNETIC POSITIONING CONTROLLER
+    // ── 5. MAGNETIC POSITION ENGINE FOR CALL TO ACTIONS
     document.querySelectorAll('.btn').forEach(buttonElement => {
         buttonElement.addEventListener('mousemove', (event) => {
-            if (isMobileDevice.matches) return; // Prevent thumb drag disruption on small screens
+            if (isMobileDevice.matches) return; // Skip magnetic jitter underneath responsive phone interactions
 
             const elementRect = buttonElement.getBoundingClientRect();
             const relativeShiftX = event.clientX - elementRect.left - elementRect.width / 2;
@@ -99,10 +99,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ── 6. 3D GYRO TILT EFFECT ENGINE FOR CONTAINER CARDS
+    // ── 6. GLASSMORPHIC 3D TILT ENGINE FOR GRID CONTAINER MODULES
     document.querySelectorAll('.pro-card, .project-card, .contact-card').forEach(cardElement => {
         cardElement.addEventListener('mousemove', (event) => {
-            if (isMobileDevice.matches) return; // Drop perspective operations on mobile screens
+            if (isMobileDevice.matches) return; // Do not apply matrix perspective tilts on small touch viewports
 
             const bounds = cardElement.getBoundingClientRect();
             const mouseX = event.clientX - bounds.left;
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ── 7. SUBTITLE RUNTIME TYPING CYCLE ENGINE
+    // ── 7. TEXT TYPING LOOP ENGINE
     const typingBoxContainer = document.querySelector('.typing-subtitle');
     if (typingBoxContainer) {
         const structuralRolesArray = [
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let dynamicOperationalDelay = deletionFlag ? 50 : 100;
 
             if (!deletionFlag && letterCharacterIndex === activeStringTarget.length) {
-                dynamicOperationalDelay = 1800; // Hold full sentence focus
+                dynamicOperationalDelay = 1800; // Freeze focus visibility window
                 deletionFlag = true;
             } else if (deletionFlag && letterCharacterIndex === 0) {
                 deletionFlag = false;
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(renderTypeCycle, 1200);
     }
 
-    // ── 8. DYNAMIC CANVAS CONNECTIVE NODE INFRASTRUCTURE BACKGROUND
+    // ── 8. DYNAMIC CONNECTIVE NETWORK BACKGROUND
     const backgroundCanvas = document.getElementById('particles');
     if (backgroundCanvas) {
         const canvasContext = backgroundCanvas.getContext('2d');
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function generateMatrixDistribution() {
-            // Drop calculation load limit to protect mobile battery architectures
+            // Lower particle generation metrics on mobile to maximize battery performance
             const standardDensityCap = isMobileDevice.matches ? 22 : 55;
             particleMatrixStore = [];
             
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cycleCanvasMatrixRender();
     }
 
-    // ── 9. SCROLL REVEAL VIEWPORT OBSERVER LOGIC
+    // ── 9. SCROLL REVEAL VIEWPORT OBSERVER INTERNALS
     const interactiveSections = document.querySelectorAll('.pro-card, .project-card, .contact-card, .section-title, .page-title');
     interactiveSections.forEach(section => section.classList.add('reveal'));
 
@@ -235,11 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('active');
             }
         });
-    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
 
     interactiveSections.forEach(section => viewportTrackingObserver.observe(section));
 
-    // ── 10. REAL-TIME SCROLL PROGRESS REGISTRATION BAR
+    // ── 10. REAL-TIME PROGRESS BAR TRACKER 
     window.addEventListener('scroll', () => {
         const topDistance = document.documentElement.scrollTop || document.body.scrollTop;
         const scrollableDeltaHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
