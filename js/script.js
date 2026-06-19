@@ -1,196 +1,251 @@
 // ===========================================================
-// NIDHISH J — PORTFOLIO RUNTIME MOTOR
+// NIDHISH J — TOTAL PORTFOLIO PERFORMANCE MOTOR
 // ===========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. INJECT SCROLL BAR NODE IN THE DOM STACK
-    const bar = document.createElement('div');
-    bar.id = 'progressBar';
-    document.body.prepend(bar);
+    // ── MEDIA DETECTION DEVICE GUARD
+    const isMobileDevice = window.matchMedia('(max-width: 868px)');
 
-    // 2. INJECT TRAILING CURSOR NODES (HIDDEN ON TOUCH SCREENS IN CSS)
-    const dotNode = document.createElement('div');
-    const ringNode = document.createElement('div');
-    dotNode.id = 'cursor-dot';
-    ringNode.id = 'cursor-ring';
-    document.body.appendChild(dotNode);
-    document.body.appendChild(ringNode);
+    // ── 1. INJECT SCROLL VALUE METRIC IN DOM TOP STACK
+    const progressBarNode = document.createElement('div');
+    progressBarNode.id = 'progressBar';
+    document.body.prepend(progressBarNode);
 
-    // 3. HARD INTERACTIVE LIGHT-DARK THEME LAYER
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
+    // ── 2. INJECT TRAILING CURSOR NODES (DESKTOP INTERNALS ONLY)
+    const dotCursorElement = document.createElement('div');
+    const ringCursorElement = document.createElement('div');
+    dotCursorElement.id = 'cursor-dot';
+    ringCursorElement.id = 'cursor-ring';
+    document.body.appendChild(dotCursorElement);
+    document.body.appendChild(ringCursorElement);
+
+    // ── 3. RUNTIME GLOBAL THEME CONTROLLER
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const rootElement = document.documentElement;
 
     function applyTheme(theme) {
         if (theme === 'light') {
-            root.setAttribute('data-theme', 'light');
-            if (themeToggle) themeToggle.textContent = '☀️';
+            rootElement.setAttribute('data-theme', 'light');
+            if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
         } else {
-            root.removeAttribute('data-theme');
-            if (themeToggle) themeToggle.textContent = '🌙';
+            rootElement.removeAttribute('data-theme');
+            if (themeToggleBtn) themeToggleBtn.textContent = '🌙';
         }
     }
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
 
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            applyTheme(next);
-            localStorage.setItem('theme', next);
+    const cachedThemeValue = localStorage.getItem('theme') || 'dark';
+    applyTheme(cachedThemeValue);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const targetedNextTheme = rootElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(targetedNextTheme);
+            localStorage.setItem('theme', targetedNextTheme);
         });
     }
 
-    // 4. SMOOTH SPRING INTERPOLATING MOUSE TRAILING CONTROLLER
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
+    // ── 4. DESKTOP ONLY LERP POINTER CONTROLLER ENGINE
+    let currentMouseX = 0, currentMouseY = 0;
+    let ringLerpX = 0, ringLerpY = 0;
 
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        dotNode.style.left = mouseX + 'px';
-        dotNode.style.top = mouseY + 'px';
+    window.addEventListener('mousemove', (event) => {
+        if (isMobileDevice.matches) return; // Immediate touch termination bypass
+
+        currentMouseX = event.clientX;
+        currentMouseY = event.clientY;
+
+        dotCursorElement.style.left = `${currentMouseX}px`;
+        dotCursorElement.style.top = `${currentMouseY}px`;
     });
 
-    function lerpCursorRing() {
-        // Delta timing tracking step loop for rubber-lag frame
-        ringX += (mouseX - ringX) * 0.15;
-        ringY += (mouseY - ringY) * 0.15;
-        
-        ringNode.style.left = ringX + 'px';
-        ringNode.style.top = ringY + 'px';
-        requestAnimationFrame(lerpCursorRing);
+    function interpolationLoop() {
+        if (!isMobileDevice.matches) {
+            ringLerpX += (currentMouseX - ringLerpX) * 0.15;
+            ringLerpY += (currentMouseY - ringLerpY) * 0.15;
+
+            ringCursorElement.style.left = `${ringLerpX}px`;
+            ringCursorElement.style.top = `${ringLerpY}px`;
+        }
+        requestAnimationFrame(interpolationLoop);
     }
-    requestAnimationFrame(lerpCursorRing);
+    requestAnimationFrame(interpolationLoop);
 
-    // Dynamic Hover listener bindings for standard user controls
-    const triggerElements = document.querySelectorAll('a, button, .pro-card, #themeToggle');
-    triggerElements.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hovering'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hovering'));
-    });
-
-    // 5. MAGNETIC POSITIONING TRANSFORM ENGINE FOR PRIMARY CALL-TO-ACTIONS
-    const magneticButtons = document.querySelectorAll('.btn');
-    magneticButtons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const boundary = btn.getBoundingClientRect();
-            // Calculate center offsets relative to hover vectors
-            const targetX = e.clientX - boundary.left - (boundary.width / 2);
-            const targetY = e.clientY - boundary.top - (boundary.height / 2);
-            
-            // Deflect position matrix by 20% dampening weight
-            btn.style.transform = `translate(${targetX * 0.2}px, ${targetY * 0.2}px)`;
+    // Universal cursor tracking feedback binders
+    const interactiveTargets = document.querySelectorAll('a, button, .pro-card, .project-card, .contact-card, #themeToggle');
+    interactiveTargets.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            if (!isMobileDevice.matches) document.body.classList.add('cursor-hovering');
         });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0px, 0px)';
+        element.addEventListener('mouseleave', () => {
+            document.body.classList.remove('cursor-hovering');
         });
     });
 
-    // 6. SUBTITLE TYPING LOOP ENGINE
-    const typingBox = document.querySelector('.typing-subtitle');
-    if (typingBox) {
-        const roles = [
+    // ── 5. MAGNETIC POSITIONING CONTROLLER
+    document.querySelectorAll('.btn').forEach(buttonElement => {
+        buttonElement.addEventListener('mousemove', (event) => {
+            if (isMobileDevice.matches) return; // Prevent thumb drag disruption on small screens
+
+            const elementRect = buttonElement.getBoundingClientRect();
+            const relativeShiftX = event.clientX - elementRect.left - elementRect.width / 2;
+            const relativeShiftY = event.clientY - elementRect.top - elementRect.height / 2;
+
+            buttonElement.style.transform = `translate(${relativeShiftX * 0.15}px, ${relativeShiftY * 0.15}px)`;
+        });
+
+        buttonElement.addEventListener('mouseleave', () => {
+            buttonElement.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
+    // ── 6. 3D GYRO TILT EFFECT ENGINE FOR CONTAINER CARDS
+    document.querySelectorAll('.pro-card, .project-card, .contact-card').forEach(cardElement => {
+        cardElement.addEventListener('mousemove', (event) => {
+            if (isMobileDevice.matches) return; // Drop perspective operations on mobile screens
+
+            const bounds = cardElement.getBoundingClientRect();
+            const mouseX = event.clientX - bounds.left;
+            const mouseY = event.clientY - bounds.top;
+            const xRotation = ((mouseY / bounds.height) - 0.5) * -10;
+            const yRotation = ((mouseX / bounds.width) - 0.5) * 10;
+
+            cardElement.style.transform = `perspective(600px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.02)`;
+        });
+
+        cardElement.addEventListener('mouseleave', () => {
+            cardElement.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) scale(1)';
+        });
+    });
+
+    // ── 7. SUBTITLE RUNTIME TYPING CYCLE ENGINE
+    const typingBoxContainer = document.querySelector('.typing-subtitle');
+    if (typingBoxContainer) {
+        const structuralRolesArray = [
             "Full Stack Developer.",
-            "AI & Intelligent Systems Enthusiast.",
-            "IoT Infrastructure Builder.",
-            "Cloud Deployment Learner."
+            "AI Enthusiast.",
+            "UI/UX Designer.",
+            "Cloud Computing Learner.",
+            "IoT Developer."
         ];
-        let structuralIndex = 0, textCharacterIndex = 0, backwardDeletionFlag = false;
+        let roleIndex = 0, letterCharacterIndex = 0, deletionFlag = false;
 
-        function runTypingLoop() {
-            const frameWordString = roles[structuralIndex];
-            typingBox.textContent = frameWordString.substring(0, backwardDeletionFlag ? textCharacterIndex - 1 : textCharacterIndex + 1);
-            backwardDeletionFlag ? textCharacterIndex-- : textCharacterIndex++;
+        function renderTypeCycle() {
+            const activeStringTarget = structuralRolesArray[roleIndex];
+            typingBoxContainer.textContent = activeStringTarget.substring(0, deletionFlag ? letterCharacterIndex - 1 : letterCharacterIndex + 1);
+            
+            deletionFlag ? letterCharacterIndex-- : letterCharacterIndex++;
+            let dynamicOperationalDelay = deletionFlag ? 50 : 100;
 
-            let dynamicTimerDelay = backwardDeletionFlag ? 40 : 80;
-
-            if (!backwardDeletionFlag && textCharacterIndex === frameWordString.length) {
-                dynamicTimerDelay = 1800; // Hold full word on screen
-                backwardDeletionFlag = true;
-            } else if (backwardDeletionFlag && textCharacterIndex === 0) {
-                backwardDeletionFlag = false;
-                structuralIndex = (structuralIndex + 1) % roles.length;
-                dynamicTimerDelay = 400; // Pause briefly before writing next phrase
+            if (!deletionFlag && letterCharacterIndex === activeStringTarget.length) {
+                dynamicOperationalDelay = 1800; // Hold full sentence focus
+                deletionFlag = true;
+            } else if (deletionFlag && letterCharacterIndex === 0) {
+                deletionFlag = false;
+                roleIndex = (roleIndex + 1) % structuralRolesArray.length;
+                dynamicOperationalDelay = 500;
             }
 
-            setTimeout(runTypingLoop, dynamicTimerDelay);
+            setTimeout(renderTypeCycle, dynamicOperationalDelay);
         }
-        setTimeout(runTypingLoop, 800);
+        setTimeout(renderTypeCycle, 1200);
     }
 
-    // 7. CANVAS CONNECTIVE NODE INFRASTRUCTURE BACKGROUND
-    const canvas = document.getElementById('particles');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particleMatrix = [];
+    // ── 8. DYNAMIC CANVAS CONNECTIVE NODE INFRASTRUCTURE BACKGROUND
+    const backgroundCanvas = document.getElementById('particles');
+    if (backgroundCanvas) {
+        const canvasContext = backgroundCanvas.getContext('2d');
+        let particleMatrixStore = [];
 
-        function autoResizeCanvasContext() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function setCanvasViewportDimensions() {
+            backgroundCanvas.width = window.innerWidth;
+            backgroundCanvas.height = window.innerHeight;
         }
 
-        function buildMatrixCluster() {
-            const densityValue = Math.min(45, Math.floor((window.innerWidth * window.innerHeight) / 30000));
-            particleMatrix = [];
-            for (let i = 0; i < densityValue; i++) {
-                particleMatrix.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.35,
-                    vy: (Math.random() - 0.5) * 0.35
+        function generateMatrixDistribution() {
+            // Drop calculation load limit to protect mobile battery architectures
+            const standardDensityCap = isMobileDevice.matches ? 22 : 55;
+            particleMatrixStore = [];
+            
+            for (let index = 0; index < standardDensityCap; index++) {
+                particleMatrixStore.push({
+                    x: Math.random() * backgroundCanvas.width,
+                    y: Math.random() * backgroundCanvas.height,
+                    vectorX: (Math.random() - 0.5) * 0.4,
+                    vectorY: (Math.random() - 0.5) * 0.4
                 });
             }
         }
 
-        function cycleCanvasUpdateRender() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const isLightActive = root.getAttribute('data-theme') === 'light';
-            ctx.fillStyle = isLightActive ? 'rgba(14, 165, 233, 0.25)' : 'rgba(0, 229, 255, 0.25)';
+        function cycleCanvasMatrixRender() {
+            canvasContext.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+            const isLightEnabled = rootElement.getAttribute('data-theme') === 'light';
+            canvasContext.fillStyle = isLightEnabled ? 'rgba(14, 154, 102, 0.25)' : 'rgba(77, 255, 180, 0.25)';
 
-            particleMatrix.forEach((dot, index) => {
-                ctx.beginPath();
-                ctx.arc(dot.x, dot.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
+            particleMatrixStore.forEach((particle, idx) => {
+                canvasContext.beginPath();
+                canvasContext.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2);
+                canvasContext.fill();
 
-                dot.x += dot.vx;
-                dot.y += dot.vy;
+                particle.x += particle.vectorX;
+                particle.y += particle.vectorY;
 
-                if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
-                if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+                if (particle.x < 0 || particle.x > backgroundCanvas.width) particle.vectorX *= -1;
+                if (particle.y < 0 || particle.y > backgroundCanvas.height) particle.vectorY *= -1;
 
-                // Build vector lattice nodes dynamically
-                for (let j = index + 1; j < particleMatrix.length; j++) {
-                    const dot2 = particleMatrix[j];
-                    const distanceVector = Math.hypot(dot.x - dot2.x, dot.y - dot2.y);
-                    if (distanceVector < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(dot.x, dot.y);
-                        ctx.lineTo(dot2.x, dot2.y);
-                        ctx.strokeStyle = isLightActive ? 
-                            `rgba(14, 165, 233, ${0.12 * (1 - distanceVector / 100)})` : 
-                            `rgba(0, 229, 255, ${0.12 * (1 - distanceVector / 100)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
+                for (let comparisonIdx = idx + 1; comparisonIdx < particleMatrixStore.length; comparisonIdx++) {
+                    const secondParticle = particleMatrixStore[comparisonIdx];
+                    const radialDistanceVec = Math.hypot(particle.x - secondParticle.x, particle.y - secondParticle.y);
+                    
+                    if (radialDistanceVec < 110) {
+                        canvasContext.beginPath();
+                        canvasContext.moveTo(particle.x, particle.y);
+                        canvasContext.lineTo(secondParticle.x, secondParticle.y);
+                        
+                        const normalizedAlphaValue = 0.12 * (1 - radialDistanceVec / 110);
+                        canvasContext.strokeStyle = isLightEnabled ? 
+                            `rgba(14, 154, 102, ${normalizedAlphaValue})` : 
+                            `rgba(77, 255, 180, ${normalizedAlphaValue})`;
+                        
+                        canvasContext.lineWidth = 0.65;
+                        canvasContext.stroke();
                     }
                 }
             });
-            requestAnimationFrame(cycleCanvasUpdateRender);
+            requestAnimationFrame(cycleCanvasMatrixRender);
         }
 
-        window.addEventListener('resize', () => { autoResizeCanvasContext(); buildMatrixCluster(); });
-        autoResizeCanvasContext();
-        buildMatrixCluster();
-        cycleCanvasUpdateRender();
+        window.addEventListener('resize', () => { 
+            setCanvasViewportDimensions(); 
+            generateMatrixDistribution(); 
+        });
+        
+        setCanvasViewportDimensions();
+        generateMatrixDistribution();
+        cycleCanvasMatrixRender();
     }
 
-    // 8. SCROLL VALUE BAR RECOGNITION LOGGER
+    // ── 9. SCROLL REVEAL VIEWPORT OBSERVER LOGIC
+    const interactiveSections = document.querySelectorAll('.pro-card, .project-card, .contact-card, .section-title, .page-title');
+    interactiveSections.forEach(section => section.classList.add('reveal'));
+
+    const viewportTrackingObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+
+    interactiveSections.forEach(section => viewportTrackingObserver.observe(section));
+
+    // ── 10. REAL-TIME SCROLL PROGRESS REGISTRATION BAR
     window.addEventListener('scroll', () => {
-        const topViewportScrollDistance = document.documentElement.scrollTop || document.body.scrollTop;
-        const totalScrollableDepth = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const completePercentage = totalScrollableDepth > 0 ? (topViewportScrollDistance / totalScrollableDepth) * 100 : 0;
-        bar.style.width = completePercentage + '%';
+        const topDistance = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollableDeltaHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const renderingPercentage = scrollableDeltaHeight > 0 ? (topDistance / scrollableDeltaHeight) * 100 : 0;
+        
+        const targetBar = document.getElementById('progressBar');
+        if (targetBar) targetBar.style.width = `${renderingPercentage}%`;
     });
 });
