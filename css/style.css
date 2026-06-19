@@ -1,10 +1,10 @@
 /* ============================================================
-   NIDHISH J — COMPLETE ULTRA DESIGN PIPELINE (FULLY RESPONSIVE)
+   NIDHISH J — COMPLETE PORTFOLIO CORE ARCHITECTURE
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
-/* ── TOKENS & SYSTEM VARIABLES ── */
+/* ── VARIABLE SYSTEM ── */
 :root {
   --bg:        #020510;
   --bg-2:      #060d1f;
@@ -40,7 +40,7 @@
   --glow2:     rgba(109, 40, 217, 0.1);
 }
 
-/* ── BASE LAYOUT ── */
+/* ── BASE LAYOUT SETTINGS ── */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -56,7 +56,7 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
-  padding-top: 80px;
+  padding-top: 100px; /* Safe headroom baseline for desktops */
 }
 
 canvas {
@@ -71,7 +71,7 @@ img {
   height: auto;
 }
 
-/* ── DESKTOP CUSTOM MOUSE TARGETING ── */
+/* ── LINKED ELEMENT CURSOR NODES ── */
 #cursor-dot {
   position: fixed;
   width: 6px;
@@ -117,10 +117,11 @@ body.cursor-hovering #cursor-ring {
   width: 0%;
 }
 
-/* ── STICKY BAR CONTROLS ── */
+/* ── NAVIGATION STRIP ── */
 .navbar {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: 1000;
   background: rgba(2, 5, 16, 0.85);
@@ -150,10 +151,7 @@ body.cursor-hovering #cursor-ring {
 }
 [data-theme="light"] .logo { color: var(--text); }
 .logo .dot { color: var(--accent); }
-
-.logo.glow {
-  text-shadow: 0 0 15px var(--glow);
-}
+.logo.glow { text-shadow: 0 0 15px var(--glow); }
 
 nav {
   display: flex;
@@ -183,7 +181,7 @@ nav a.active, nav a:hover {
 }
 .theme-btn:hover { transform: scale(1.1); }
 
-/* ── ARCHITECTURE CONTAINERS ── */
+/* ── DOM CONTAINER BLOCK UNITS ── */
 .container {
   max-width: 1200px;
   margin: auto;
@@ -191,7 +189,7 @@ nav a.active, nav a:hover {
 }
 
 .section {
-  padding: 60px 0;
+  padding: 40px 0 60px;
   position: relative;
 }
 
@@ -218,7 +216,7 @@ nav a.active, nav a:hover {
   max-width: 700px;
 }
 
-/* Hero structural blocks */
+/* Hero container styling */
 .hero-container {
   display: flex;
   align-items: center;
@@ -289,7 +287,7 @@ nav a.active, nav a:hover {
   gap: 12px;
 }
 
-/* Actions */
+/* System Action Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -307,9 +305,7 @@ nav a.active, nav a:hover {
   background: var(--accent);
   color: #020510;
 }
-.btn-primary:hover {
-  box-shadow: 0 0 20px var(--glow);
-}
+.btn-primary:hover { box-shadow: 0 0 20px var(--glow); }
 
 .btn-secondary {
   background: rgba(11, 21, 48, 0.3);
@@ -321,7 +317,7 @@ nav a.active, nav a:hover {
   border-color: var(--accent);
 }
 
-/* Morphing Profile Shape */
+/* Frame Layout Blob */
 .profile-frame {
   position: relative;
   width: 290px;
@@ -347,7 +343,7 @@ nav a.active, nav a:hover {
   100% { border-radius: 60% 40% 60% 40% / 40% 50% 50% 60%; }
 }
 
-/* ── GRID SYSTEM & GLASSMORPHIC CARDS ── */
+/* ── RESPONSIVE GRIDS AND CARDS ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -413,7 +409,7 @@ nav a.active, nav a:hover {
   color: var(--accent);
 }
 
-/* Contact structures */
+/* Contact layout structural styling */
 .contact-container {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -437,11 +433,9 @@ nav a.active, nav a:hover {
   outline: none;
   transition: border-color 0.2s;
 }
-.form-group input:focus, .form-group textarea:focus {
-  border-color: var(--accent);
-}
+.form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
 
-/* ── SITE FOOTER MODULE ── */
+/* ── FOOTER LAYER ── */
 .footer {
   border-top: 1px solid var(--border);
   padding: 40px 0 24px;
@@ -449,12 +443,9 @@ nav a.active, nav a:hover {
   background: var(--bg-2);
   text-align: center;
 }
-.footer p {
-  font-size: 14px;
-  color: var(--muted);
-}
+.footer p { font-size: 14px; color: var(--muted); }
 
-/* ── MOTION DEPRECIATION ── */
+/* ── HARDWARE ACCELERATED ANIMATION CONTROLS ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -462,7 +453,6 @@ nav a.active, nav a:hover {
   }
 }
 
-/* ── SCROLL ANIMATIONS REVEAL LAYER ── */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -473,25 +463,41 @@ nav a.active, nav a:hover {
   transform: translateY(0);
 }
 
-/* ── SYSTEM PHONE & TABLET MEDIA QUERY BREAKPOINTS ── */
+/* ── CRITICAL MOBILE COMPATIBILITY HOOK ── */
 @media (max-width: 868px) {
   body {
-    padding-top: 70px;
+    /* CRITICAL FIX: Higher top padding pushes pages down past mobile wrap navbar height */
+    padding-top: 130px !important; 
   }
 
-  /* Terminate desktop pointer nodes to prevent touch screen drag leaks */
+  /* Kill trailing desktop indicators to allow normal phone tap speeds */
   #cursor-dot, #cursor-ring {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    pointer-events: none !important;
   }
 
   .nav-container {
     padding: 12px 16px;
+    flex-wrap: wrap; /* Allows menu nodes to wrap layout on extremely tiny mobile devices */
+    justify-content: center;
+    gap: 10px;
   }
   
   nav {
-    gap: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav a {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .section {
+    padding: 20px 0 40px; /* Reduces extra margins on mobile to utilize viewport space */
   }
 
   .hero-container {
@@ -504,16 +510,19 @@ nav a.active, nav a:hover {
     width: 100%;
   }
 
-  .main-title {
-    font-size: 34px;
+  /* Font compression fixes overlap styling seen in the screenshot */
+  .main-title, .page-title, .section-title {
+    font-size: 28px !important;
+    line-height: 1.2;
   }
 
   .typing-subtitle {
     font-size: 18px;
+    min-height: 24px;
   }
 
-  .tagline {
-    font-size: 14.5px;
+  .tagline, .section-subtitle {
+    font-size: 14px;
   }
 
   .grid, .grid-3, .contact-container {
@@ -533,8 +542,8 @@ nav a.active, nav a:hover {
   }
 
   .profile-frame {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
   }
 }
 
