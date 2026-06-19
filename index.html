@@ -8,9 +8,266 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ── Home page specific styles ── */
+        /* ══════════════════════════════════════
+           BUBBLE POP PAGE ENTRANCE
+        ══════════════════════════════════════ */
+        #bubble-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            overflow: hidden;
+            background: #020510;
+        }
 
-        /* Quick stats strip under hero */
+        .entry-bubble {
+            position: absolute;
+            border-radius: 50%;
+            animation: bubbleRise var(--dur) ease-out forwards;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes bubbleRise {
+            0%   { transform: translateY(110vh) scale(0.2); opacity: 0.9; }
+            60%  { transform: translateY(-5vh) scale(1); opacity: 1; }
+            80%  { transform: translateY(-5vh) scale(1.18); opacity: 0.9; }
+            90%  { transform: translateY(-5vh) scale(0.92); }
+            100% { transform: translateY(-5vh) scale(1.4); opacity: 0; }
+        }
+
+        @keyframes overlayFade {
+            0%   { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        #bubble-overlay.fading {
+            animation: overlayFade 1.6s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        /* ══════════════════════════════════════
+           FLOATING AMBIENT ORBS
+        ══════════════════════════════════════ */
+        .ambient-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat var(--t) ease-in-out infinite;
+            animation-delay: var(--td);
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33%  { transform: translate(var(--dx), var(--dy)) scale(1.1); }
+            66%  { transform: translate(calc(var(--dx) * -0.5), calc(var(--dy) * 1.5)) scale(0.9); }
+        }
+
+        /* ══════════════════════════════════════
+           MAGNETIC CURSOR
+        ══════════════════════════════════════ */
+        #cursor-dot {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: #00e5ff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: screen;
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 36px; height: 36px;
+            border: 1.5px solid rgba(0, 229, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
+            mix-blend-mode: screen;
+        }
+
+        /* ══════════════════════════════════════
+           PROFILE — ORGANIC BLOB SHAPE
+        ══════════════════════════════════════ */
+        .profile-wrapper {
+            position: relative;
+            width: 340px;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Rotating outer glow rings */
+        .profile-ring-1,
+        .profile-ring-2,
+        .profile-ring-3 {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            animation: ringRotate linear infinite;
+        }
+
+        .profile-ring-1 {
+            width: 380px; height: 380px;
+            border-top-color: rgba(0, 229, 255, 0.4);
+            border-right-color: rgba(0, 229, 255, 0.1);
+            animation-duration: 8s;
+        }
+
+        .profile-ring-2 {
+            width: 340px; height: 340px;
+            border-bottom-color: rgba(124, 58, 237, 0.5);
+            border-left-color: rgba(124, 58, 237, 0.15);
+            animation-duration: 6s;
+            animation-direction: reverse;
+        }
+
+        .profile-ring-3 {
+            width: 310px; height: 310px;
+            border-top-color: rgba(244, 114, 182, 0.3);
+            border-right-color: rgba(244, 114, 182, 0.08);
+            animation-duration: 12s;
+        }
+
+        @keyframes ringRotate {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* Orbiting skill dots */
+        .orbit-dot {
+            position: absolute;
+            width: 190px; height: 190px;
+            animation: orbitSpin linear infinite;
+            top: 50%; left: 50%;
+            margin-top: -95px;
+            margin-left: -95px;
+        }
+
+        .orbit-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            color: #00e5ff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            padding: 3px 8px;
+            border-radius: 99px;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+        }
+
+        .orbit-dot:nth-child(1) { animation-duration: 7s; }
+        .orbit-dot:nth-child(2) { animation-duration: 10s; animation-direction: reverse; animation-delay: -3s; }
+        .orbit-dot:nth-child(3) { animation-duration: 9s; animation-delay: -6s; }
+
+        @keyframes orbitSpin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* The actual blob image container */
+        .blob-frame {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            z-index: 2;
+        }
+
+        .blob-frame svg.blob-clip {
+            position: absolute;
+            width: 0; height: 0;
+        }
+
+        .blob-img-wrap {
+            width: 280px;
+            height: 280px;
+            clip-path: url(#blobClip);
+            animation: blobMorph 8s ease-in-out infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes blobMorph {
+            0%, 100% { clip-path: url(#blobClip); }
+            25%  { clip-path: url(#blobClip2); }
+            50%  { clip-path: url(#blobClip3); }
+            75%  { clip-path: url(#blobClip4); }
+        }
+
+        .blob-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(1.1) contrast(1.05);
+            transition: transform 0.6s ease;
+        }
+
+        .blob-img-wrap:hover img {
+            transform: scale(1.06);
+        }
+
+        /* Blob glow behind */
+        .blob-glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(0,229,255,0.25) 0%, rgba(124,58,237,0.2) 50%, transparent 70%);
+            filter: blur(20px);
+            animation: blobGlowPulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes blobGlowPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50%  { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Floating tech icon badges around blob */
+        .float-badge {
+            position: absolute;
+            background: rgba(6, 13, 31, 0.85);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #00e5ff;
+            white-space: nowrap;
+            z-index: 5;
+            animation: badgeFloat ease-in-out infinite;
+        }
+
+        .float-badge:nth-child(1) { top: 10px; right: -60px; animation-duration: 3.2s; animation-delay: 0s; }
+        .float-badge:nth-child(2) { bottom: 40px; right: -70px; animation-duration: 4s; animation-delay: -1.2s; }
+        .float-badge:nth-child(3) { bottom: 10px; left: -60px; animation-duration: 3.7s; animation-delay: -0.6s; }
+        .float-badge:nth-child(4) { top: 50px; left: -55px; animation-duration: 4.5s; animation-delay: -2s; }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0px); }
+            50%  { transform: translateY(-8px); }
+        }
+
+        /* ══════════════════════════════════════
+           STAT STRIP
+        ══════════════════════════════════════ */
         .stat-strip {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -42,14 +299,15 @@
             color: var(--muted);
         }
 
-        /* Scroll cue */
+        /* ══════════════════════════════════════
+           SCROLL CUE
+        ══════════════════════════════════════ */
         .scroll-cue {
             position: absolute;
             bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
-            width: 22px;
-            height: 36px;
+            width: 22px; height: 36px;
             border: 2px solid rgba(0, 229, 255, 0.35);
             border-radius: 99px;
             display: flex;
@@ -58,8 +316,7 @@
         }
 
         .scroll-cue span {
-            width: 4px;
-            height: 8px;
+            width: 4px; height: 8px;
             background: var(--accent);
             border-radius: 99px;
             animation: scrollDot 1.6s ease-in-out infinite;
@@ -71,11 +328,11 @@
             100% { opacity: 0; transform: translateY(0); }
         }
 
-        @media (max-width: 960px) {
-            .scroll-cue { display: none; }
-        }
+        @media (max-width: 960px) { .scroll-cue { display: none; } }
 
-        /* Focus pills row */
+        /* ══════════════════════════════════════
+           FOCUS PILLS
+        ══════════════════════════════════════ */
         .focus-pills {
             display: flex;
             flex-wrap: wrap;
@@ -95,7 +352,9 @@
             letter-spacing: 0.03em;
         }
 
-        /* Featured project tiles */
+        /* ══════════════════════════════════════
+           FEATURED PROJECT
+        ══════════════════════════════════════ */
         .featured-project .project-top {
             display: flex;
             align-items: center;
@@ -113,13 +372,8 @@
             border-radius: 99px;
         }
 
-        .featured-project h3 {
-            font-size: 20px;
-        }
-
-        .featured-project p {
-            margin-top: 4px;
-        }
+        .featured-project h3 { font-size: 20px; }
+        .featured-project p  { margin-top: 4px; }
 
         .view-all-link {
             display: block;
@@ -132,12 +386,11 @@
             letter-spacing: 0.03em;
             transition: var(--transition);
         }
+        .view-all-link:hover { letter-spacing: 0.06em; }
 
-        .view-all-link:hover {
-            letter-spacing: 0.06em;
-        }
-
-        /* CTA banner */
+        /* ══════════════════════════════════════
+           CTA BANNER
+        ══════════════════════════════════════ */
         .cta-banner {
             position: relative;
             text-align: center;
@@ -160,8 +413,7 @@
 
         .cta-title {
             font-family: var(--font-display);
-            font-size: 34px;
-            font-weight: 800;
+            font-size: 34px; font-weight: 800;
             color: #fff;
             margin-bottom: 12px;
         }
@@ -179,19 +431,169 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+
+        /* ══════════════════════════════════════
+           HERO ENTRANCE ANIMATION
+        ══════════════════════════════════════ */
+        .hero-left > * {
+            opacity: 0;
+            transform: translateX(-40px);
+            animation: slideInLeft 0.7s ease forwards;
+        }
+
+        .hero-left > *:nth-child(1) { animation-delay: 1.2s; }
+        .hero-left > *:nth-child(2) { animation-delay: 1.4s; }
+        .hero-left > *:nth-child(3) { animation-delay: 1.55s; }
+        .hero-left > *:nth-child(4) { animation-delay: 1.7s; }
+        .hero-left > *:nth-child(5) { animation-delay: 1.85s; }
+
+        .hero-right {
+            opacity: 0;
+            transform: translateX(40px) scale(0.9);
+            animation: slideInRight 0.8s ease forwards;
+            animation-delay: 1.3s;
+        }
+
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+
+        /* ══════════════════════════════════════
+           3D TILT ON CARDS
+        ══════════════════════════════════════ */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+        }
+
+        /* ══════════════════════════════════════
+           FLOATING PARTICLES (page-level)
+        ══════════════════════════════════════ */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            animation: sparkleFade 1.2s ease forwards;
+            z-index: 9998;
+        }
+
+        @keyframes sparkleFade {
+            0%   { transform: scale(0) translateY(0); opacity: 1; }
+            100% { transform: scale(1) translateY(-60px); opacity: 0; }
+        }
+
+        /* ══════════════════════════════════════
+           AURORA BEAM (hero background)
+        ══════════════════════════════════════ */
+        .aurora {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .aurora-beam {
+            position: absolute;
+            width: 600px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), rgba(124,58,237,0.3), transparent);
+            filter: blur(1px);
+            animation: auroraMove ease-in-out infinite;
+        }
+
+        .aurora-beam:nth-child(1) { top: 15%; left: -200px; animation-duration: 9s; }
+        .aurora-beam:nth-child(2) { top: 40%; right: -200px; animation-duration: 12s; animation-direction: reverse; animation-delay: -3s; }
+        .aurora-beam:nth-child(3) { top: 70%; left: -200px; animation-duration: 7s; animation-delay: -5s; }
+
+        @keyframes auroraMove {
+            0%   { transform: translateX(-100px) rotate(-2deg); opacity: 0; }
+            20%  { opacity: 1; }
+            80%  { opacity: 1; }
+            100% { transform: translateX(110vw) rotate(2deg); opacity: 0; }
+        }
+
+        /* ══════════════════════════════════════
+           HERO GLITCH TITLE EFFECT
+        ══════════════════════════════════════ */
+        .glitch-name {
+            position: relative;
+        }
+
+        .glitch-name::before,
+        .glitch-name::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+
+        .glitch-name::before {
+            color: rgba(0, 229, 255, 0.7);
+            animation: glitch1 8s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        }
+
+        .glitch-name::after {
+            color: rgba(244, 114, 182, 0.6);
+            animation: glitch2 8s infinite;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch1 {
+            0%, 94%, 100% { transform: none; opacity: 0; }
+            95%  { transform: translate(-3px, 1px); opacity: 1; }
+            96%  { transform: translate(3px, -1px); opacity: 1; }
+            97%  { transform: none; opacity: 0; }
+        }
+
+        @keyframes glitch2 {
+            0%, 94%, 100% { transform: none; opacity: 0; }
+            95%  { transform: translate(3px, 2px); opacity: 1; }
+            96%  { transform: translate(-3px, -2px); opacity: 1; }
+            97%  { transform: none; opacity: 0; }
+        }
+
+        /* ══════════════════════════════════════
+           MOBILE BLOB FIX
+        ══════════════════════════════════════ */
+        @media (max-width: 960px) {
+            .profile-wrapper { width: 260px; height: 300px; }
+            .blob-frame { width: 220px; height: 220px; }
+            .blob-img-wrap { width: 220px; height: 220px; }
+            .profile-ring-1 { width: 280px; height: 280px; }
+            .profile-ring-2 { width: 250px; height: 250px; }
+            .profile-ring-3 { width: 230px; height: 230px; }
+            .float-badge { display: none; }
+            .orbit-dot { display: none; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- BUBBLE OVERLAY -->
+    <div id="bubble-overlay"></div>
+
+    <!-- MAGNETIC CURSOR -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- AMBIENT FLOATING ORBS -->
+    <div class="ambient-orbs">
+        <div class="orb" style="width:500px;height:500px;top:-100px;left:-150px;background:radial-gradient(circle,rgba(0,229,255,0.07),transparent 70%);--t:14s;--td:-2s;--dx:60px;--dy:80px;"></div>
+        <div class="orb" style="width:600px;height:600px;top:20%;right:-200px;background:radial-gradient(circle,rgba(124,58,237,0.08),transparent 70%);--t:18s;--td:-7s;--dx:-80px;--dy:60px;"></div>
+        <div class="orb" style="width:400px;height:400px;bottom:-100px;left:30%;background:radial-gradient(circle,rgba(244,114,182,0.06),transparent 70%);--t:12s;--td:-4s;--dx:40px;--dy:-60px;"></div>
+    </div>
 
     <canvas id="particles"></canvas>
 
     <header class="navbar">
         <div class="nav-container">
-
-            <h1 class="logo glow">
-                Nidhish <span class="dot">J</span>
-            </h1>
-
+            <h1 class="logo glow">Nidhish <span class="dot">J</span></h1>
             <nav>
                 <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
@@ -200,29 +602,29 @@
                 <a href="certifications.html">Certifications</a>
                 <a href="contact.html">Contact</a>
             </nav>
-
-            <button id="themeToggle" class="theme-btn">
-                🌙
-            </button>
-
+            <button id="themeToggle" class="theme-btn">🌙</button>
         </div>
     </header>
 
     <main>
-
         <section class="hero-section">
-            <div class="container">
 
+            <!-- Aurora background beams -->
+            <div class="aurora">
+                <div class="aurora-beam"></div>
+                <div class="aurora-beam"></div>
+                <div class="aurora-beam"></div>
+            </div>
+
+            <div class="container">
                 <div class="hero-container">
 
                     <div class="hero-left">
-
-                        <span class="badge">
-                            🚀 Computer Science Engineering Student
-                        </span>
+                        <span class="badge">🚀 Computer Science Engineering Student</span>
 
                         <h1 class="main-title">
-                            Nidhish <span class="highlight">J</span>
+                            <span class="glitch-name" data-text="Nidhish">Nidhish</span>
+                            <span class="highlight"> J</span>
                         </h1>
 
                         <h2 class="typing-subtitle"></h2>
@@ -235,100 +637,112 @@
                         </p>
 
                         <div class="hero-cta">
-
-                            <a href="projects.html" class="btn btn-primary">
-                                🚀 View Projects
-                            </a>
-
-                            <a href="https://drive.google.com/file/d/1MDJvNUyQqDSdJSYIswV5mEea7pzrSSZ8/view?usp=sharing"
-                               target="_blank"
-                               class="btn btn-secondary">
-                                📄 Resume
-                            </a>
-
-                            <a href="https://github.com/nidhishj100"
-                               target="_blank"
-                               class="btn btn-secondary">
-                                💻 GitHub
-                            </a>
-
-                            <a href="https://www.linkedin.com/in/nidhishj100"
-                               target="_blank"
-                               class="btn btn-secondary">
-                                🔗 LinkedIn
-                            </a>
-
+                            <a href="projects.html" class="btn btn-primary">🚀 View Projects</a>
+                            <a href="https://drive.google.com/file/d/1MDJvNUyQqDSdJSYIswV5mEea7pzrSSZ8/view?usp=sharing" target="_blank" class="btn btn-secondary">📄 Resume</a>
+                            <a href="https://github.com/nidhishj100" target="_blank" class="btn btn-secondary">💻 GitHub</a>
+                            <a href="https://www.linkedin.com/in/nidhishj100" target="_blank" class="btn btn-secondary">🔗 LinkedIn</a>
                         </div>
-
                     </div>
 
                     <div class="hero-right">
+                        <!-- SVG blob clip paths -->
+                        <svg width="0" height="0" class="blob-clip">
+                            <defs>
+                                <clipPath id="blobClip" clipPathUnits="objectBoundingBox">
+                                    <path d="M0.5,0.02 C0.72,0.02 0.96,0.16 0.98,0.38 C1.0,0.6 0.88,0.82 0.68,0.94 C0.48,1.06 0.24,1.0 0.1,0.84 C-0.04,0.68 0.02,0.44 0.1,0.26 C0.18,0.08 0.28,0.02 0.5,0.02Z"/>
+                                </clipPath>
+                                <clipPath id="blobClip2" clipPathUnits="objectBoundingBox">
+                                    <path d="M0.5,0.05 C0.68,0.0 0.92,0.12 0.97,0.34 C1.02,0.56 0.9,0.8 0.72,0.92 C0.54,1.04 0.28,1.02 0.12,0.88 C-0.04,0.74 0.0,0.5 0.06,0.3 C0.12,0.1 0.32,0.1 0.5,0.05Z"/>
+                                </clipPath>
+                                <clipPath id="blobClip3" clipPathUnits="objectBoundingBox">
+                                    <path d="M0.52,0.03 C0.74,0.0 0.98,0.18 0.99,0.4 C1.0,0.62 0.84,0.84 0.64,0.95 C0.44,1.06 0.2,0.98 0.08,0.8 C-0.04,0.62 0.04,0.38 0.12,0.2 C0.2,0.02 0.3,0.06 0.52,0.03Z"/>
+                                </clipPath>
+                                <clipPath id="blobClip4" clipPathUnits="objectBoundingBox">
+                                    <path d="M0.48,0.04 C0.7,0.02 0.95,0.2 0.97,0.42 C0.99,0.64 0.86,0.86 0.66,0.96 C0.46,1.06 0.22,0.96 0.08,0.78 C-0.06,0.6 0.02,0.36 0.1,0.18 C0.18,0.0 0.26,0.06 0.48,0.04Z"/>
+                                </clipPath>
+                            </defs>
+                        </svg>
 
-                        <div class="profile-frame">
-                            <img src="nidhish-profile.jpg"
-                                 alt="Nidhish J"
-                                 class="profile-img">
+                        <div class="profile-wrapper">
+                            <!-- Rotating rings -->
+                            <div class="profile-ring-1"></div>
+                            <div class="profile-ring-2"></div>
+                            <div class="profile-ring-3"></div>
+
+                            <!-- Orbiting mini dots with labels -->
+                            <div class="orbit-dot" data-label="AI"></div>
+                            <div class="orbit-dot" data-label="IoT"></div>
+                            <div class="orbit-dot" data-label="Cloud"></div>
+
+                            <!-- Blob image -->
+                            <div class="blob-frame">
+                                <div class="blob-glow"></div>
+                                <div class="blob-img-wrap">
+                                    <img src="nidhish-profile.jpg" alt="Nidhish J">
+                                </div>
+                            </div>
+
+                            <!-- Floating tech badges -->
+                            <div class="float-badge">⚡ Full Stack</div>
+                            <div class="float-badge">🤖 ML/AI</div>
+                            <div class="float-badge">📡 IoT</div>
+                            <div class="float-badge">☁️ Cloud</div>
                         </div>
-
                     </div>
 
                 </div>
 
                 <!-- Quick stats -->
                 <div class="stat-strip">
-                    <div class="pro-card stat-box">
+                    <div class="pro-card stat-box tilt-card">
                         <div class="stat-num">7.6</div>
                         <div class="stat-label">CGPA</div>
                     </div>
-                    <div class="pro-card stat-box">
+                    <div class="pro-card stat-box tilt-card">
                         <div class="stat-num">6</div>
                         <div class="stat-label">Internships</div>
                     </div>
-                    <div class="pro-card stat-box">
+                    <div class="pro-card stat-box tilt-card">
                         <div class="stat-num">25+</div>
                         <div class="stat-label">Certifications</div>
                     </div>
-                    <div class="pro-card stat-box">
+                    <div class="pro-card stat-box tilt-card">
                         <div class="stat-num">2</div>
                         <div class="stat-label">Live Projects</div>
                     </div>
-                    <div class="pro-card stat-box">
+                    <div class="pro-card stat-box tilt-card">
                         <div class="stat-num">2028</div>
                         <div class="stat-label">Graduation</div>
                     </div>
                 </div>
-
             </div>
 
             <div class="scroll-cue"><span></span></div>
         </section>
 
+        <!-- REST OF THE SECTIONS UNCHANGED -->
         <section class="section">
             <div class="container">
                 <h2 class="section-title"><span class="number">01.</span> Core Domains</h2>
-                <p class="section-subtitle">
-                    The four areas I keep coming back to — across coursework, internships, and side builds.
-                </p>
+                <p class="section-subtitle">The four areas I keep coming back to — across coursework, internships, and side builds.</p>
                 <div class="grid grid-3">
-                    <div class="pro-card functional">
+                    <div class="pro-card tilt-card functional">
                         <div class="card-icon">🧠</div>
                         <h3>AI & Machine Learning</h3>
                         <p>Exploring intelligent systems and ML fundamentals, from predictive models to AI-assisted automation.</p>
                     </div>
-                    <div class="pro-card functional">
+                    <div class="pro-card tilt-card functional">
                         <div class="card-icon">🌐</div>
                         <h3>IoT & Edge Computing</h3>
                         <p>Designing sensor networks, microcontroller pipelines, and live cloud-connected monitoring dashboards.</p>
                     </div>
-                    <div class="pro-card functional">
+                    <div class="pro-card tilt-card functional">
                         <div class="card-icon">💻</div>
                         <h3>Full Stack Development</h3>
                         <p>Building end-to-end web platforms with HTML, CSS, JavaScript, Java, and Python — UI through to backend logic.</p>
                     </div>
                 </div>
-
                 <br><br>
-
                 <div class="focus-pills">
                     <span>🎯 Currently learning: Full Stack Development</span>
                     <span>☁️ Cloud Technologies</span>
@@ -339,15 +753,10 @@
 
         <section class="section">
             <div class="container">
-
                 <h2 class="section-title"><span class="number">02.</span> Featured Projects</h2>
-                <p class="section-subtitle">
-                    Academic and industry-backed builds solving real healthcare and environmental problems.
-                </p>
-
+                <p class="section-subtitle">Academic and industry-backed builds solving real healthcare and environmental problems.</p>
                 <div class="grid">
-
-                    <div class="pro-card featured-project">
+                    <div class="pro-card featured-project tilt-card">
                         <div class="project-top">
                             <div class="card-icon" style="margin-bottom:0;">💊</div>
                             <span class="project-status">Completed</span>
@@ -355,14 +764,10 @@
                         <h3>SafeRx Prescription Verifier</h3>
                         <p>An IBM-supported healthcare project that validates and verifies medical prescriptions to reduce errors, improve patient safety, and streamline clinical workflows.</p>
                         <div class="tech-tags">
-                            <span>IBM</span>
-                            <span>Healthcare</span>
-                            <span>Web Application</span>
-                            <span>AI</span>
+                            <span>IBM</span><span>Healthcare</span><span>Web Application</span><span>AI</span>
                         </div>
                     </div>
-
-                    <div class="pro-card featured-project">
+                    <div class="pro-card featured-project tilt-card">
                         <div class="project-top">
                             <div class="card-icon" style="margin-bottom:0;">🌳</div>
                             <span class="project-status">Completed</span>
@@ -370,119 +775,57 @@
                         <h3>Deforestation Detection Website</h3>
                         <p>A web-based environmental monitoring platform that identifies and tracks deforestation activity, built to raise awareness through accessible, data-driven visuals.</p>
                         <div class="tech-tags">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                            <span>Environmental Monitoring</span>
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Environmental Monitoring</span>
                         </div>
                     </div>
-
                 </div>
-
                 <a href="projects.html" class="view-all-link">View all projects →</a>
-
             </div>
         </section>
 
         <section class="section">
             <div class="container">
-
                 <h2 class="section-title"><span class="number">03.</span> Professional Experience</h2>
-                <p class="section-subtitle">
-                    Six internships across full stack, AI, IoT, design, and data — each one teaching a different slice of the stack.
-                </p>
-
+                <p class="section-subtitle">Six internships across full stack, AI, IoT, design, and data — each one teaching a different slice of the stack.</p>
                 <div class="grid">
-
-                    <div class="pro-card">
+                    <div class="pro-card tilt-card">
                         <div class="card-icon">🗄️</div>
                         <h3>Project Data Management Intern</h3>
                         <p>IGEN • 1 Year<br>Streamlined structured and unstructured dataset processing to support database integrity and rapid asset retrieval.</p>
                     </div>
-
-                    <div class="pro-card">
+                    <div class="pro-card tilt-card">
                         <div class="card-icon">🎨</div>
                         <h3>UI/UX Design Intern</h3>
                         <p>Shrishti Campus Technopark • 15 Days<br>Engineered mid-to-high fidelity wireframes and interactive mobile prototypes using Figma.</p>
                     </div>
-
-                    <div class="pro-card">
+                    <div class="pro-card tilt-card">
                         <div class="card-icon">🤖</div>
                         <h3>AI & Robotics Intern</h3>
                         <p>Robomatic, Coimbatore<br>Integrated ML algorithms with autonomous robotic hardware for automation and obstacle-evasion mapping.</p>
                     </div>
-
-                    <div class="pro-card">
+                    <div class="pro-card tilt-card">
                         <div class="card-icon">📡</div>
                         <h3>IoT Intern</h3>
                         <p>Industrial Training Program<br>Built IoT automation systems across microcontroller architectures, sensor networks, and live cloud dashboards.</p>
                     </div>
-
                 </div>
-
             </div>
         </section>
 
         <section class="section">
             <div class="container">
-
                 <h2 class="section-title"><span class="number">04.</span> Achievements</h2>
-                <p class="section-subtitle">
-                    Recognition earned through competitions, conferences, and community work.
-                </p>
-
+                <p class="section-subtitle">Recognition earned through competitions, conferences, and community work.</p>
                 <div class="grid">
-
-                    <div class="pro-card">
-                        <div class="card-icon">🏆</div>
-                        <h3>First Prize</h3>
-                        <p>Paper Presentation</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">🏆</div>
-                        <h3>First Prize</h3>
-                        <p>Poster Presentation</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">🌍</div>
-                        <h3>International Conference</h3>
-                        <p>Participant</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">🎓</div>
-                        <h3>National Conference</h3>
-                        <p>Participant</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">⚡</div>
-                        <h3>Hackathons</h3>
-                        <p>2 Participations</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">☁️</div>
-                        <h3>NPTEL</h3>
-                        <p>Cloud Computing Certified</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">🧭</div>
-                        <h3>Rajyapuraskar Award</h3>
-                        <p>Governor Scouts & Guides</p>
-                    </div>
-
-                    <div class="pro-card">
-                        <div class="card-icon">🤝</div>
-                        <h3>IGEN</h3>
-                        <p>Volunteer & Donor Member</p>
-                    </div>
-
+                    <div class="pro-card tilt-card"><div class="card-icon">🏆</div><h3>First Prize</h3><p>Paper Presentation</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">🏆</div><h3>First Prize</h3><p>Poster Presentation</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">🌍</div><h3>International Conference</h3><p>Participant</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">🎓</div><h3>National Conference</h3><p>Participant</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">⚡</div><h3>Hackathons</h3><p>2 Participations</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">☁️</div><h3>NPTEL</h3><p>Cloud Computing Certified</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">🧭</div><h3>Rajyapuraskar Award</h3><p>Governor Scouts & Guides</p></div>
+                    <div class="pro-card tilt-card"><div class="card-icon">🤝</div><h3>IGEN</h3><p>Volunteer & Donor Member</p></div>
                 </div>
-
             </div>
         </section>
 
@@ -498,7 +841,6 @@
                 </div>
             </div>
         </section>
-
     </main>
 
     <footer class="footer">
@@ -530,5 +872,139 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script>
+    // ═══════════════════════════════════════════
+    // BUBBLE POP PAGE ENTRANCE
+    // ═══════════════════════════════════════════
+    (function() {
+        const overlay = document.getElementById('bubble-overlay');
+        const colors = [
+            'rgba(0,229,255,0.6)', 'rgba(124,58,237,0.5)',
+            'rgba(244,114,182,0.4)', 'rgba(0,180,255,0.5)',
+            'rgba(160,80,255,0.4)', 'rgba(0,229,255,0.3)'
+        ];
+        const bubbleCount = 22;
+
+        for (let i = 0; i < bubbleCount; i++) {
+            const b = document.createElement('div');
+            b.className = 'entry-bubble';
+            const size = 40 + Math.random() * 160;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const delay = Math.random() * 0.5;
+            const dur = 1.0 + Math.random() * 0.6;
+            b.style.cssText = `
+                width:${size}px; height:${size}px;
+                left:${Math.random() * 100}%;
+                background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.3), ${color});
+                border: 1px solid rgba(255,255,255,0.2);
+                box-shadow: inset 0 0 20px rgba(255,255,255,0.1), 0 0 20px ${color};
+                --delay:${delay}s; --dur:${dur}s;
+            `;
+            overlay.appendChild(b);
+        }
+
+        setTimeout(() => {
+            overlay.classList.add('fading');
+            setTimeout(() => { overlay.style.display = 'none'; }, 2000);
+        }, 800);
+    })();
+
+    // ═══════════════════════════════════════════
+    // MAGNETIC CURSOR
+    // ═══════════════════════════════════════════
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
+    });
+
+    // Smooth ring follow
+    (function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top  = ry + 'px';
+        requestAnimationFrame(animRing);
+    })();
+
+    // Ring grows on hover over interactive elements
+    document.querySelectorAll('a, button, .pro-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            ring.style.width = '60px'; ring.style.height = '60px';
+            ring.style.borderColor = 'rgba(244,114,182,0.7)';
+        });
+        el.addEventListener('mouseleave', () => {
+            ring.style.width = '36px'; ring.style.height = '36px';
+            ring.style.borderColor = 'rgba(0,229,255,0.5)';
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // SPARKLE TRAIL ON MOUSE MOVE
+    // ═══════════════════════════════════════════
+    let sparkleCount = 0;
+    document.addEventListener('mousemove', e => {
+        if (sparkleCount++ % 4 !== 0) return; // every 4th move
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        const size = 4 + Math.random() * 6;
+        const colors = ['#00e5ff','#7c3aed','#f472b6'];
+        s.style.cssText = `
+            left:${e.clientX}px; top:${e.clientY}px;
+            width:${size}px; height:${size}px;
+            background:${colors[Math.floor(Math.random()*colors.length)]};
+        `;
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 1200);
+    });
+
+    // ═══════════════════════════════════════════
+    // 3D TILT ON CARDS
+    // ═══════════════════════════════════════════
+    document.querySelectorAll('.tilt-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const dx = (e.clientX - cx) / (rect.width / 2);
+            const dy = (e.clientY - cy) / (rect.height / 2);
+            card.style.transform = `perspective(600px) rotateY(${dx * 8}deg) rotateX(${-dy * 8}deg) scale(1.03)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
+        });
+    });
+
+    // ═══════════════════════════════════════════
+    // TYPING EFFECT (same as original)
+    // ═══════════════════════════════════════════
+    const typingElement = document.querySelector('.typing-subtitle');
+    if (typingElement) {
+        const roles = ["Full Stack Developer","AI Enthusiast","UI/UX Designer","Cloud Computing Learner","IoT Developer"];
+        let roleIndex = 0, charIndex = 0, isDeleting = false;
+        function typeEffect() {
+            const current = roles[roleIndex];
+            typingElement.textContent = current.substring(0, isDeleting ? charIndex - 1 : charIndex + 1);
+            isDeleting ? charIndex-- : charIndex++;
+            let speed = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === current.length) { speed = 1800; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; speed = 500; }
+            setTimeout(typeEffect, speed);
+        }
+        setTimeout(typeEffect, 1500);
+    }
+
+    // ═══════════════════════════════════════════
+    // HIDE CURSOR ON MOBILE
+    // ═══════════════════════════════════════════
+    if ('ontouchstart' in window) {
+        dot.style.display = 'none';
+        ring.style.display = 'none';
+    }
+    </script>
 </body>
 </html>
