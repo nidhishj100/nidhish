@@ -905,3 +905,77 @@ nav a.active::after {
     transition-duration: 0.01ms !important;
   }
 }
+/* ============================================
+   EXTRA MOBILE IMPROVEMENTS
+   ============================================ */
+
+/* Prevent images from overflowing */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better mobile buttons */
+@media (max-width: 640px) {
+  .btn,
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+/* Better touch spacing */
+@media (max-width: 640px) {
+  nav a {
+    padding: 8px;
+  }
+}
+
+/* Prevent long text overflow */
+h1, h2, h3, p {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Smooth section reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Glass effect for cards */
+.pro-card,
+.project-card,
+.contact-card,
+.mentor-card {
+  backdrop-filter: blur(18px);
+}
+
+/* Hover glow for project cards */
+.project-card:hover {
+  box-shadow:
+    0 0 20px rgba(0,229,255,.2),
+    0 0 60px rgba(124,58,237,.15);
+}
+
+/* Floating animation */
+.float {
+  animation: floatEffect 4s ease-in-out infinite;
+}
+
+@keyframes floatEffect {
+  0%,100% {transform: translateY(0);}
+  50% {transform: translateY(-12px);}
+}
