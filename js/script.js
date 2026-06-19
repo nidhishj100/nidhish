@@ -193,3 +193,104 @@ if (typingElement) {
 
     typeEffect();
 }
+// ===================================
+// COUNTER ANIMATION
+// ===================================
+
+const counters = document.querySelectorAll(".counter");
+
+const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            const counter = entry.target;
+            const target = +counter.getAttribute("data-target");
+            let count = 0;
+
+            const updateCounter = () => {
+                const increment = target / 100;
+
+                if(count < target) {
+                    count += increment;
+                    counter.innerText = Math.ceil(count);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+
+            updateCounter();
+            counterObserver.unobserve(counter);
+        }
+    });
+});
+
+counters.forEach(counter => counterObserver.observe(counter));
+// ===================================
+// ACTIVE NAVBAR SECTION
+// ===================================
+
+const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    sections.forEach(section => {
+
+        const sectionTop = section.offsetTop - 120;
+
+        if(window.scrollY >= sectionTop) {
+            current = section.getAttribute("id");
+        }
+    });
+
+    navLinks.forEach(link => {
+
+        link.classList.remove("active");
+
+        if(link.getAttribute("href").includes(current)) {
+            link.classList.add("active");
+        }
+    });
+});
+// ===================================
+// MAGNETIC BUTTON EFFECT
+// ===================================
+
+document.querySelectorAll('.btn').forEach(button => {
+
+    button.addEventListener('mousemove', e => {
+
+        const rect = button.getBoundingClientRect();
+
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        button.style.transform =
+            `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+
+    button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translate(0,0)';
+    });
+});
+// ===================================
+// SCROLL PROGRESS BAR
+// ===================================
+
+window.addEventListener("scroll", () => {
+
+    const winScroll =
+        document.documentElement.scrollTop;
+
+    const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const scrolled =
+        (winScroll / height) * 100;
+
+    document.getElementById("progressBar").style.width =
+        scrolled + "%";
+});
