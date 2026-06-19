@@ -446,10 +446,10 @@ nav a.active, nav a:hover {
 .footer p { font-size: 14px; color: var(--muted); }
 
 /* ── HARDWARE ACCELERATED ANIMATION CONTROLS ── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+@media (max-width: 868px) {
+  /* Increase padding-top to push the entire hero section below the navbar */
+  body {
+    padding-top: 180px !important; 
   }
 }
 
