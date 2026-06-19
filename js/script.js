@@ -1,152 +1,196 @@
 // ===========================================================
-// NIDHISH J — PORTFOLIO SCRIPTS
-// Interactive Particle Engine, Theme System, Animated Custom Cursors
+// NIDHISH J — PORTFOLIO RUNTIME MOTOR
 // ===========================================================
 
-/* ---------- Theme Engine Configuration ---------- */
-const themeToggle = document.getElementById('themeToggle');
-const root = document.documentElement;
+document.addEventListener('DOMContentLoaded', () => {
 
-function applyTheme(theme) {
-    if (theme === 'light') {
-        root.setAttribute('data-theme', 'light');
-        if (themeToggle) themeToggle.textContent = '☀️';
-    } else {
-        root.removeAttribute('data-theme');
-        if (themeToggle) themeToggle.textContent = '🌙';
-    }
-}
+    // 1. INJECT SCROLL BAR NODE IN THE DOM STACK
+    const bar = document.createElement('div');
+    bar.id = 'progressBar';
+    document.body.prepend(bar);
 
-const savedTheme = localStorage.getItem('theme') || 'dark';
-applyTheme(savedTheme);
+    // 2. INJECT TRAILING CURSOR NODES (HIDDEN ON TOUCH SCREENS IN CSS)
+    const dotNode = document.createElement('div');
+    const ringNode = document.createElement('div');
+    dotNode.id = 'cursor-dot';
+    ringNode.id = 'cursor-ring';
+    document.body.appendChild(dotNode);
+    document.body.appendChild(ringNode);
 
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-        const next = current === 'light' ? 'dark' : 'light';
-        applyTheme(next);
-        localStorage.setItem('theme', next);
-    });
-}
+    // 3. HARD INTERACTIVE LIGHT-DARK THEME LAYER
+    const themeToggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
 
-/* ---------- Smooth Fluid Cursor Trailing System ---------- */
-const cursorDot = document.getElementById('cursor-dot');
-const cursorRing = document.getElementById('cursor-ring');
-
-let mouseX = 0, mouseY = 0;
-let ringX = 0, ringY = 0;
-
-window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    if (cursorDot) {
-        cursorDot.style.left = mouseX + 'px';
-        cursorDot.style.top = mouseY + 'px';
-    }
-});
-
-function animateCursorRing() {
-    // Linear interpolation for smooth tracking lag effect
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-    
-    if (cursorRing) {
-        cursorRing.style.left = ringX + 'px';
-        cursorRing.style.top = ringY + 'px';
-    }
-    requestAnimationFrame(animateCursorRing);
-}
-animateCursorRing();
-
-/* ---------- Particle Matrix Engine Background ---------- */
-const canvas = document.getElementById('particles');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
-    function createParticles() {
-        const count = Math.min(50, Math.floor((window.innerWidth * window.innerHeight) / 30000));
-        particles = [];
-        for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                r: Math.random() * 1.5 + 0.5
-            });
+    function applyTheme(theme) {
+        if (theme === 'light') {
+            root.setAttribute('data-theme', 'light');
+            if (themeToggle) themeToggle.textContent = '☀️';
+        } else {
+            root.removeAttribute('data-theme');
+            if (themeToggle) themeToggle.textContent = '🌙';
         }
     }
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
 
-    function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const isLight = root.getAttribute('data-theme') === 'light';
-        const color = isLight ? 'rgba(14, 165, 233, 0.25)' : 'rgba(0, 229, 255, 0.25)';
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            applyTheme(next);
+            localStorage.setItem('theme', next);
+        });
+    }
+
+    // 4. SMOOTH SPRING INTERPOLATING MOUSE TRAILING CONTROLLER
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         
-        particles.forEach((p, i) => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-            ctx.fillStyle = color;
-            ctx.fill();
-
-            p.x += p.vx;
-            p.y += p.vy;
-
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-            for (let j = i + 1; j < particles.length; j++) {
-                let p2 = particles[j];
-                let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                if (dist < 100) {
-                    ctx.beginPath();
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = isLight ? `rgba(14, 165, 233, ${0.1 * (1 - dist / 100)})` : `rgba(0, 229, 255, ${0.1 * (1 - dist / 100)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            }
-        });
-        requestAnimationFrame(drawParticles);
-    }
-
-    window.addEventListener('resize', () => {
-        resizeCanvas();
-        createParticles();
+        dotNode.style.left = mouseX + 'px';
+        dotNode.style.top = mouseY + 'px';
     });
-    
-    resizeCanvas();
-    createParticles();
-    drawParticles();
-}
 
-/* ---------- Scroll Progress Bar ---------- */
-window.addEventListener("scroll", () => {
-    const bar = document.getElementById("progressBar");
-    if (bar) {
-        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-        bar.style.width = scrolled + "%";
+    function lerpCursorRing() {
+        // Delta timing tracking step loop for rubber-lag frame
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        
+        ringNode.style.left = ringX + 'px';
+        ringNode.style.top = ringY + 'px';
+        requestAnimationFrame(lerpCursorRing);
     }
-});
+    requestAnimationFrame(lerpCursorRing);
 
-/* ---------- Intersection Fade Reveals ---------- */
-const revealElements = document.querySelectorAll('.reveal');
-if (revealElements.length > 0) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
+    // Dynamic Hover listener bindings for standard user controls
+    const triggerElements = document.querySelectorAll('a, button, .pro-card, #themeToggle');
+    triggerElements.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hovering'));
+    });
+
+    // 5. MAGNETIC POSITIONING TRANSFORM ENGINE FOR PRIMARY CALL-TO-ACTIONS
+    const magneticButtons = document.querySelectorAll('.btn');
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const boundary = btn.getBoundingClientRect();
+            // Calculate center offsets relative to hover vectors
+            const targetX = e.clientX - boundary.left - (boundary.width / 2);
+            const targetY = e.clientY - boundary.top - (boundary.height / 2);
+            
+            // Deflect position matrix by 20% dampening weight
+            btn.style.transform = `translate(${targetX * 0.2}px, ${targetY * 0.2}px)`;
         });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => observer.observe(el));
-}
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
+    // 6. SUBTITLE TYPING LOOP ENGINE
+    const typingBox = document.querySelector('.typing-subtitle');
+    if (typingBox) {
+        const roles = [
+            "Full Stack Developer.",
+            "AI & Intelligent Systems Enthusiast.",
+            "IoT Infrastructure Builder.",
+            "Cloud Deployment Learner."
+        ];
+        let structuralIndex = 0, textCharacterIndex = 0, backwardDeletionFlag = false;
+
+        function runTypingLoop() {
+            const frameWordString = roles[structuralIndex];
+            typingBox.textContent = frameWordString.substring(0, backwardDeletionFlag ? textCharacterIndex - 1 : textCharacterIndex + 1);
+            backwardDeletionFlag ? textCharacterIndex-- : textCharacterIndex++;
+
+            let dynamicTimerDelay = backwardDeletionFlag ? 40 : 80;
+
+            if (!backwardDeletionFlag && textCharacterIndex === frameWordString.length) {
+                dynamicTimerDelay = 1800; // Hold full word on screen
+                backwardDeletionFlag = true;
+            } else if (backwardDeletionFlag && textCharacterIndex === 0) {
+                backwardDeletionFlag = false;
+                structuralIndex = (structuralIndex + 1) % roles.length;
+                dynamicTimerDelay = 400; // Pause briefly before writing next phrase
+            }
+
+            setTimeout(runTypingLoop, dynamicTimerDelay);
+        }
+        setTimeout(runTypingLoop, 800);
+    }
+
+    // 7. CANVAS CONNECTIVE NODE INFRASTRUCTURE BACKGROUND
+    const canvas = document.getElementById('particles');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let particleMatrix = [];
+
+        function autoResizeCanvasContext() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function buildMatrixCluster() {
+            const densityValue = Math.min(45, Math.floor((window.innerWidth * window.innerHeight) / 30000));
+            particleMatrix = [];
+            for (let i = 0; i < densityValue; i++) {
+                particleMatrix.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.35,
+                    vy: (Math.random() - 0.5) * 0.35
+                });
+            }
+        }
+
+        function cycleCanvasUpdateRender() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const isLightActive = root.getAttribute('data-theme') === 'light';
+            ctx.fillStyle = isLightActive ? 'rgba(14, 165, 233, 0.25)' : 'rgba(0, 229, 255, 0.25)';
+
+            particleMatrix.forEach((dot, index) => {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+
+                dot.x += dot.vx;
+                dot.y += dot.vy;
+
+                if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+                if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+
+                // Build vector lattice nodes dynamically
+                for (let j = index + 1; j < particleMatrix.length; j++) {
+                    const dot2 = particleMatrix[j];
+                    const distanceVector = Math.hypot(dot.x - dot2.x, dot.y - dot2.y);
+                    if (distanceVector < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(dot.x, dot.y);
+                        ctx.lineTo(dot2.x, dot2.y);
+                        ctx.strokeStyle = isLightActive ? 
+                            `rgba(14, 165, 233, ${0.12 * (1 - distanceVector / 100)})` : 
+                            `rgba(0, 229, 255, ${0.12 * (1 - distanceVector / 100)})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(cycleCanvasUpdateRender);
+        }
+
+        window.addEventListener('resize', () => { autoResizeCanvasContext(); buildMatrixCluster(); });
+        autoResizeCanvasContext();
+        buildMatrixCluster();
+        cycleCanvasUpdateRender();
+    }
+
+    // 8. SCROLL VALUE BAR RECOGNITION LOGGER
+    window.addEventListener('scroll', () => {
+        const topViewportScrollDistance = document.documentElement.scrollTop || document.body.scrollTop;
+        const totalScrollableDepth = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const completePercentage = totalScrollableDepth > 0 ? (topViewportScrollDistance / totalScrollableDepth) * 100 : 0;
+        bar.style.width = completePercentage + '%';
+    });
+});
