@@ -8,269 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ══════════════════════════════════════
-           BUBBLE POP PAGE ENTRANCE
-        ══════════════════════════════════════ */
-        #bubble-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            pointer-events: none;
-            overflow: hidden;
-            background: #020510;
-            /* Added safety fade animation fallback directly so home page never displays blank */
-            animation: overlayFade 1.8s ease forwards;
-            animation-delay: 1.5s;
-        }
+        /* ── Home page specific styles ── */
 
-        .entry-bubble {
-            position: absolute;
-            border-radius: 50%;
-            animation: bubbleRise var(--dur) ease-out forwards;
-            animation-delay: var(--delay);
-        }
-
-        @keyframes bubbleRise {
-            0%   { transform: translateY(110vh) scale(0.2); opacity: 0.9; }
-            60%  { transform: translateY(-5vh) scale(1); opacity: 1; }
-            80%  { transform: translateY(-5vh) scale(1.18); opacity: 0.9; }
-            90%  { transform: translateY(-5vh) scale(0.92); }
-            100% { transform: translateY(-5vh) scale(1.4); opacity: 0; }
-        }
-
-        @keyframes overlayFade {
-            0%   { opacity: 1; pointer-events: all; }
-            85%  { opacity: 1; pointer-events: all; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
-        }
-
-        #bubble-overlay.fading {
-            animation: overlayFade 1.6s ease forwards;
-            animation-delay: 0.4s;
-        }
-
-        /* ══════════════════════════════════════
-           FLOATING AMBIENT ORBS
-        ══════════════════════════════════════ */
-        .ambient-orbs {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: orbFloat var(--t) ease-in-out infinite;
-            animation-delay: var(--td);
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33%  { transform: translate(var(--dx), var(--dy)) scale(1.1); }
-            66%  { transform: translate(calc(var(--dx) * -0.5), calc(var(--dy) * 1.5)) scale(0.9); }
-        }
-
-        /* ══════════════════════════════════════
-           MAGNETIC CURSOR
-        ══════════════════════════════════════ */
-        #cursor-dot {
-            position: fixed;
-            width: 8px; height: 8px;
-            background: #00e5ff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background 0.2s;
-            mix-blend-mode: screen;
-        }
-
-        #cursor-ring {
-            position: fixed;
-            width: 36px; height: 36px;
-            border: 1.5px solid rgba(0, 229, 255, 0.5);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
-            mix-blend-mode: screen;
-        }
-
-        /* ══════════════════════════════════════
-           PROFILE — ORGANIC BLOB SHAPE
-        ══════════════════════════════════════ */
-        .profile-wrapper {
-            position: relative;
-            width: 340px;
-            height: 380px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Rotating outer glow rings */
-        .profile-ring-1,
-        .profile-ring-2,
-        .profile-ring-3 {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid transparent;
-            animation: ringRotate linear infinite;
-        }
-
-        .profile-ring-1 {
-            width: 380px; height: 380px;
-            border-top-color: rgba(0, 229, 255, 0.4);
-            border-right-color: rgba(0, 229, 255, 0.1);
-            animation-duration: 8s;
-        }
-
-        .profile-ring-2 {
-            width: 340px; height: 340px;
-            border-bottom-color: rgba(124, 58, 237, 0.5);
-            border-left-color: rgba(124, 58, 237, 0.15);
-            animation-duration: 6s;
-            animation-direction: reverse;
-        }
-
-        .profile-ring-3 {
-            width: 310px; height: 310px;
-            border-top-color: rgba(244, 114, 182, 0.3);
-            border-right-color: rgba(244, 114, 182, 0.08);
-            animation-duration: 12s;
-        }
-
-        @keyframes ringRotate {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-
-        /* Orbiting skill dots */
-        .orbit-dot {
-            position: absolute;
-            width: 190px; height: 190px;
-            animation: orbitSpin linear infinite;
-            top: 50%; left: 50%;
-            margin-top: -95px;
-            margin-left: -95px;
-        }
-
-        .orbit-dot::after {
-            content: attr(data-label);
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid rgba(0, 229, 255, 0.3);
-            color: #00e5ff;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9px;
-            padding: 3px 8px;
-            border-radius: 99px;
-            white-space: nowrap;
-            backdrop-filter: blur(8px);
-        }
-
-        .orbit-dot:nth-child(1) { animation-duration: 7s; }
-        .orbit-dot:nth-child(2) { animation-duration: 10s; animation-direction: reverse; animation-delay: -3s; }
-        .orbit-dot:nth-child(3) { animation-duration: 9s; animation-delay: -6s; }
-
-        @keyframes orbitSpin {
-            from { transform: rotate(0deg); }
-            to   { transform: rotate(360deg); }
-        }
-
-        /* The actual blob image container */
-        .blob-frame {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            z-index: 2;
-        }
-
-        .blob-frame svg.blob-clip {
-            position: absolute;
-            width: 0; height: 0;
-        }
-
-        .blob-img-wrap {
-            width: 280px;
-            height: 280px;
-            clip-path: url(#blobClip);
-            animation: blobMorph 8s ease-in-out infinite;
-            overflow: hidden;
-            position: relative;
-        }
-
-        @keyframes blobMorph {
-            0%, 100% { clip-path: url(#blobClip); }
-            25%  { clip-path: url(#blobClip2); }
-            50%  { clip-path: url(#blobClip3); }
-            75%  { clip-path: url(#blobClip4); }
-        }
-
-        .blob-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            filter: saturate(1.1) contrast(1.05);
-            transition: transform 0.6s ease;
-        }
-
-        .blob-img-wrap:hover img {
-            transform: scale(1.06);
-        }
-
-        /* Blob glow behind */
-        .blob-glow {
-            position: absolute;
-            inset: -20px;
-            background: radial-gradient(circle, rgba(0,229,255,0.25) 0%, rgba(124,58,237,0.2) 50%, transparent 70%);
-            filter: blur(20px);
-            animation: blobGlowPulse 4s ease-in-out infinite;
-            z-index: 1;
-        }
-
-        @keyframes blobGlowPulse {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50%  { opacity: 1; transform: scale(1.1); }
-        }
-
-        /* Floating tech icon badges around blob */
-        .float-badge {
-            position: absolute;
-            background: rgba(6, 13, 31, 0.85);
-            border: 1px solid rgba(0, 229, 255, 0.25);
-            backdrop-filter: blur(12px);
-            border-radius: 12px;
-            padding: 8px 12px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: #00e5ff;
-            white-space: nowrap;
-            z-index: 5;
-            animation: badgeFloat ease-in-out infinite;
-        }
-
-        .float-badge:nth-child(1) { top: 10px; right: -60px; animation-duration: 3.2s; animation-delay: 0s; }
-        .float-badge:nth-child(2) { bottom: 40px; right: -70px; animation-duration: 4s; animation-delay: -1.2s; }
-        .float-badge:nth-child(3) { bottom: 10px; left: -60px; animation-duration: 3.7s; animation-delay: -0.6s; }
-        .float-badge:nth-child(4) { top: 50px; left: -55px; animation-duration: 4.5s; animation-delay: -2s; }
-
-        @keyframes badgeFloat {
-            0%, 100% { transform: translateY(0px); }
-            50%  { transform: translateY(-8px); }
-        }
-
-        /* ══════════════════════════════════════
-           STAT STRIP
-        ══════════════════════════════════════ */
+        /* Quick stats strip under hero */
         .stat-strip {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -302,15 +42,14 @@
             color: var(--muted);
         }
 
-        /* ══════════════════════════════════════
-           SCROLL CUE
-        ══════════════════════════════════════ */
+        /* Scroll cue */
         .scroll-cue {
             position: absolute;
             bottom: 28px;
             left: 50%;
             transform: translateX(-50%);
-            width: 22px; height: 36px;
+            width: 22px;
+            height: 36px;
             border: 2px solid rgba(0, 229, 255, 0.35);
             border-radius: 99px;
             display: flex;
@@ -319,7 +58,8 @@
         }
 
         .scroll-cue span {
-            width: 4px; height: 8px;
+            width: 4px;
+            height: 8px;
             background: var(--accent);
             border-radius: 99px;
             animation: scrollDot 1.6s ease-in-out infinite;
@@ -331,11 +71,11 @@
             100% { opacity: 0; transform: translateY(0); }
         }
 
-        @media (max-width: 960px) { .scroll-cue { display: none; } }
+        @media (max-width: 960px) {
+            .scroll-cue { display: none; }
+        }
 
-        /* ══════════════════════════════════════
-           FOCUS PILLS
-        ══════════════════════════════════════ */
+        /* Focus pills row */
         .focus-pills {
             display: flex;
             flex-wrap: wrap;
@@ -355,9 +95,7 @@
             letter-spacing: 0.03em;
         }
 
-        /* ══════════════════════════════════════
-           FEATURED PROJECT
-        ══════════════════════════════════════ */
+        /* Featured project tiles */
         .featured-project .project-top {
             display: flex;
             align-items: center;
@@ -375,8 +113,13 @@
             border-radius: 99px;
         }
 
-        .featured-project h3 { font-size: 20px; }
-        .featured-project p  { margin-top: 4px; }
+        .featured-project h3 {
+            font-size: 20px;
+        }
+
+        .featured-project p {
+            margin-top: 4px;
+        }
 
         .view-all-link {
             display: block;
@@ -389,11 +132,12 @@
             letter-spacing: 0.03em;
             transition: var(--transition);
         }
-        .view-all-link:hover { letter-spacing: 0.06em; }
 
-        /* ══════════════════════════════════════
-           CTA BANNER
-        ══════════════════════════════════════ */
+        .view-all-link:hover {
+            letter-spacing: 0.06em;
+        }
+
+        /* CTA banner */
         .cta-banner {
             position: relative;
             text-align: center;
@@ -416,7 +160,8 @@
 
         .cta-title {
             font-family: var(--font-display);
-            font-size: 34px; font-weight: 800;
+            font-size: 34px;
+            font-weight: 800;
             color: #fff;
             margin-bottom: 12px;
         }
@@ -434,342 +179,336 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-
-        /* ══════════════════════════════════════
-           HERO ENTRANCE ANIMATION
-        ══════════════════════════════════════ */
-        .hero-left > * {
-            opacity: 0;
-            transform: translateX(-40px);
-            animation: slideInLeft 0.7s ease forwards;
-        }
-
-        .hero-left > *:nth-child(1) { animation-delay: 1.2s; }
-        .hero-left > *:nth-child(2) { animation-delay: 1.4s; }
-        .hero-left > *:nth-child(3) { animation-delay: 1.55s; }
-        .hero-left > *:nth-child(4) { animation-delay: 1.7s; }
-        .hero-left > *:nth-child(5) { animation-delay: 1.85s; }
-
-        .hero-right {
-            opacity: 0;
-            transform: translateX(40px) scale(0.9);
-            animation: slideInRight 0.8s ease forwards;
-            animation-delay: 1.3s;
-        }
-
-        @keyframes slideInLeft {
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            to { opacity: 1; transform: translateX(0) scale(1); }
-        }
-
-        /* ══════════════════════════════════════
-           3D TILT ON CARDS
-        ══════════════════════════════════════ */
-        .tilt-card {
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease;
-        }
-
-        /* ══════════════════════════════════════
-           FLOATING PARTICLES (page-level)
-        ══════════════════════════════════════ */
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            border-radius: 50%;
-            animation: sparkleFade 1.2s ease forwards;
-            z-index: 9998;
-        }
-
-        @keyframes sparkleFade {
-            0%   { transform: scale(0) translateY(0); opacity: 1; }
-            100% { transform: scale(1) translateY(-60px); opacity: 0; }
-        }
-
-        /* ══════════════════════════════════════
-           AURORA BEAM (hero background)
-        ══════════════════════════════════════ */
-        .aurora {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .aurora-beam {
-            position: absolute;
-            width: 600px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), rgba(124,58,237,0.3), transparent);
-            filter: blur(1px);
-            animation: auroraMove ease-in-out infinite;
-        }
-
-        .aurora-beam:nth-child(1) { top: 15%; left: -200px; animation-duration: 9s; }
-        .aurora-beam:nth-child(2) { top: 40%; right: -200px; animation-duration: 12s; animation-direction: reverse; animation-delay: -3s; }
-        .aurora-beam:nth-child(3) { top: 70%; left: -200px; animation-duration: 7s; animation-delay: -5s; }
-
-        @keyframes auroraMove {
-            0%   { transform: translateX(-100px) rotate(-2deg); opacity: 0; }
-            20%  { opacity: 1; }
-            80%  { opacity: 1; }
-            100% { transform: translateX(110vw) rotate(2deg); opacity: 0; }
-        }
-
-        /* ══════════════════════════════════════
-           HERO GLITCH TITLE EFFECT
-        ══════════════════════════════════════ */
-        .glitch-name {
-            position: relative;
-        }
-
-        .glitch-name::before,
-        .glitch-name::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-        }
-
-        .glitch-name::before {
-            color: rgba(0, 229, 255, 0.7);
-            animation: glitch1 8s infinite;
-            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-        }
-
-        .glitch-name::after {
-            color: rgba(244, 114, 182, 0.6);
-            animation: glitch2 8s infinite;
-            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitch1 {
-            0%, 94%, 100% { transform: none; opacity: 0; }
-            95%  { transform: translate(-3px, 1px); opacity: 1; }
-            96%  { transform: translate(3px, -1px); opacity: 1; }
-            97%  { transform: none; opacity: 0; }
-        }
-
-        @keyframes glitch2 {
-            0%, 94%, 100% { transform: none; opacity: 0; }
-            95%  { transform: translate(3px, 2px); opacity: 1; }
-            96%  { transform: translate(-2px, -2px); opacity: 1; }
-            97%  { transform: none; opacity: 0; }
-        }
-
-        /* ============================================
-           RESPONSIVE — LAPTOP / TABLET OVERRIDES
-           ============================================ */
-        @media (max-width: 1024px) {
-            .hero-container {
-                flex-direction: column-reverse;
-                text-align: center;
-                gap: 50px;
-                padding-top: 40px;
-                padding-bottom: 40px;
-            }
-            .hero-left { max-width: 100%; }
-            .hero-title { font-size: 52px; justify-content: center; }
-            .hero-subtitle { font-size: 24px; }
-            .hero-description { margin: 0 auto 30px; }
-            .hero-cta { justify-content: center; }
-            .profile-frame { width: 280px !important; height: 280px !important; }
-            nav { gap: 16px; flex-wrap: wrap; justify-content: center; }
-        }
-
-        /* ============================================
-           RESPONSIVE — MOBILE
-           ============================================ */
-        @media (max-width: 640px) {
-            .hero-title { font-size: 40px; }
-            .hero-subtitle { font-size: 20px; }
-            .typing-container { font-size: 18px; }
-            .profile-wrapper { width: 260px; height: 300px; }
-            .profile-ring-1 { width: 300px; height: 300px; }
-            .profile-ring-2 { width: 270px; height: 270px; }
-            .profile-ring-3 { width: 240px; height: 240px; }
-            .blob-frame, .blob-img-wrap { width: 210px; height: 210px; }
-            .float-badge { display: none !important; }
-            .stat-strip { grid-template-columns: 1fr 1fr; }
-            .cta-title { font-size: 26px; }
-        }
     </style>
 </head>
 <body>
 
-    <div id="bubble-overlay"></div>
-
-    <div id="progressBar"></div>
-
-    <div class="audio-control" id="audioToggle" title="Toggle Ambient Matrix Soundtrack">
-        <span class="audio-wave"><span></span><span></span><span></span></span>
-        <span class="audio-txt">AUDIO OFF</span>
-    </div>
-
     <canvas id="particles"></canvas>
-
-    <div class="ambient-orbs">
-        <div class="orb" style="--bg: rgba(0,229,255,0.15); width: 400px; height: 400px; top: 10%; left: -100px; --dx: 80px; --dy: 50px; --t: 22s; --td: 0s;"></div>
-        <div class="orb" style="--bg: rgba(124,58,237,0.12); width: 500px; height: 500px; bottom: -100px; right: -100px; --dx: -100px; --dy: -70px; --t: 28s; --td: -4s;"></div>
-        <div class="orb" style="--bg: rgba(244,114,182,0.08); width: 350px; height: 350px; top: 40%; right: 20%; --dx: 40px; --dy: 90px; --t: 19s; --td: -8s;"></div>
-    </div>
-
-    <div id="cursor-dot"></div>
-    <div id="cursor-ring"></div>
 
     <header class="navbar">
         <div class="nav-container">
-            <h1 class="logo glow">NJ<span class="dot">.</span></h1>
-            <div style="display: flex; align-items: center; gap: 14px;">
-                <button id="themeToggle" class="theme-btn">🌙</button>
-                <nav>
-                    <a href="index.html" class="active">Home</a>
-                    <a href="about.html">About</a>
-                    <a href="projects.html">Projects</a>
-                    <a href="skills.html">Skills</a>
-                    <a href="certifications.html">Certifications</a>
-                    <a href="contact.html">Contact</a>
-                </nav>
-            </div>
+
+            <h1 class="logo glow">
+                Nidhish <span class="dot">J</span>
+            </h1>
+
+            <nav>
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="skills.html">Skills</a>
+                <a href="certifications.html">Certifications</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <button id="themeToggle" class="theme-btn">
+                🌙
+            </button>
+
         </div>
     </header>
 
-    <main class="section" style="overflow: visible;">
-        <div class="aurora">
-            <div class="aurora-beam"></div>
-            <div class="aurora-beam"></div>
-            <div class="aurora-beam"></div>
-        </div>
+    <main>
 
-        <div class="container hero-container">
-            
-            <div class="hero-left">
-                <div class="focus-pills" style="justify-content: flex-start; margin-bottom: 14px;">
-                    <span>⚡ Full-Stack Developer</span>
-                    <span>🤖 AI & Intelligent Systems</span>
-                </div>
-                
-                <h1 class="hero-title">
-                    I am <span class="glitch-name text-gradient" data-text="Nidhish J">Nidhish J</span><span class="dot">.</span>
-                </h1>
+        <section class="hero-section">
+            <div class="container">
 
-                <div class="typing-container">
-                    <span class="typing-text">Engineering </span>
-                    <span class="typing-subtitle"></span>
-                </div>
+                <div class="hero-container">
 
-                <p class="hero-description">
-                    Computer Science Engineering student building optimized web applications, AI models, and cloud-integrated systems to deliver impact and solve enterprise challenges.
-                </p>
+                    <div class="hero-left">
 
-                <div class="hero-cta">
-                    <a href="projects.html" class="btn btn-primary magnet-target">Explore Projects</a>
-                    <a href="contact.html" class="btn btn-secondary magnet-target">Let's Connect</a>
-                </div>
-            </div>
+                        <span class="badge">
+                            🚀 Computer Science Engineering Student
+                        </span>
 
-            <div class="hero-right">
-                <div class="profile-wrapper">
-                    
-                    <div class="profile-ring-1"></div>
-                    <div class="profile-ring-2"></div>
-                    <div class="profile-ring-3"></div>
+                        <h1 class="main-title">
+                            Nidhish <span class="highlight">J</span>
+                        </h1>
 
-                    <div class="orbit-dot" data-label="React.js"></div>
-                    <div class="orbit-dot" data-label="Python / AI"></div>
-                    <div class="orbit-dot" data-label="Node.js"></div>
+                        <h2 class="typing-subtitle"></h2>
 
-                    <div class="float-badge">🚀 4+ Internships</div>
-                    <div class="float-badge">💡 10+ Certs</div>
-                    <div class="float-badge">⚙️ Full Stack</div>
-                    <div class="float-badge">🌐 Cloud/IoT</div>
+                        <p class="tagline">
+                            Computer Science Engineering student at Dhanalakshmi Srinivasan College
+                            of Engineering, Coimbatore — building across Full Stack Development,
+                            Artificial Intelligence, Cloud Computing, and UI/UX Design through
+                            six internships, two live projects, and a steady habit of shipping.
+                        </p>
 
-                    <div class="blob-frame">
-                        <div class="blob-glow"></div>
-                        <div class="blob-img-wrap">
-                            <img src="nidhish-profile.jpg" alt="Nidhish J Profile Visual Avatar">
+                        <div class="hero-cta">
+
+                            <a href="projects.html" class="btn btn-primary">
+                                🚀 View Projects
+                            </a>
+
+                            <a href="https://drive.google.com/file/d/1MDJvNUyQqDSdJSYIswV5mEea7pzrSSZ8/view?usp=sharing"
+                               target="_blank"
+                               class="btn btn-secondary">
+                                📄 Resume
+                            </a>
+
+                            <a href="https://github.com/nidhishj100"
+                               target="_blank"
+                               class="btn btn-secondary">
+                                💻 GitHub
+                            </a>
+
+                            <a href="https://www.linkedin.com/in/nidhishj100"
+                               target="_blank"
+                               class="btn btn-secondary">
+                                🔗 LinkedIn
+                            </a>
+
                         </div>
 
-                        <svg class="blob-clip">
-                            <defs>
-                                <clipPath id="blobClip" clipPathUnits="objectBoundingBox">
-                                    <path d="M0.15,0.35 C0.08,0.55 0.12,0.78 0.3,0.88 C0.48,0.98 0.72,0.92 0.85,0.76 C0.98,0.6 0.95,0.35 0.82,0.18 C0.69,0.01 0.45,-0.05 0.28,0.06 C0.11,0.17 0.22,0.15 0.15,0.35 Z"/>
-                                </clipPath>
-                                <clipPath id="blobClip2" clipPathUnits="objectBoundingBox">
-                                    <path d="M0.2,0.25 C0.1,0.45 0.05,0.7 0.22,0.85 C0.39,1 0.7,0.95 0.85,0.8 C1,0.65 0.9,0.4 0.78,0.2 C0.66,0 0.4,0.05 0.2,0.25 Z"/>
-                                </clipPath>
-                                <clipPath id="blobClip3" clipPathUnits="objectBoundingBox">
-                                    <path d="M0.25,0.15 C0.12,0.3 0.18,0.6 0.32,0.78 C0.46,0.96 0.75,0.98 0.88,0.82 C1,0.66 0.92,0.35 0.79,0.18 C0.66,0.01 0.38,0 0.25,0.15 Z"/>
-                                </clipPath>
-                                <clipPath id="blobClip4" clipPathUnits="objectBoundingBox">
-                                    <path d="M0.18,0.4 C0.15,0.6 0.25,0.8 0.42,0.88 C0.59,0.96 0.8,0.85 0.88,0.68 C0.96,0.51 0.88,0.28 0.75,0.15 C0.62,0.02 0.38,0.02 0.25,0.12 C0.12,0.22 0.21,0.2 0.18,0.4 Z"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
+                    </div>
+
+                    <div class="hero-right">
+
+                        <div class="profile-frame">
+                            <img src="nidhish-profile.jpg"
+                                 alt="Nidhish J"
+                                 class="profile-img">
+                        </div>
+
                     </div>
 
                 </div>
+
+                <!-- Quick stats -->
+                <div class="stat-strip">
+                    <div class="pro-card stat-box">
+                        <div class="stat-num">7.6</div>
+                        <div class="stat-label">CGPA</div>
+                    </div>
+                    <div class="pro-card stat-box">
+                        <div class="stat-num">6</div>
+                        <div class="stat-label">Internships</div>
+                    </div>
+                    <div class="pro-card stat-box">
+                        <div class="stat-num">25+</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                    <div class="pro-card stat-box">
+                        <div class="stat-num">2</div>
+                        <div class="stat-label">Live Projects</div>
+                    </div>
+                    <div class="pro-card stat-box">
+                        <div class="stat-num">2028</div>
+                        <div class="stat-label">Graduation</div>
+                    </div>
+                </div>
+
             </div>
 
-        </div>
+            <div class="scroll-cue"><span></span></div>
+        </section>
 
-        <div class="container" style="position: relative; z-index: 5;">
-            <div class="stat-strip">
-                <div class="stat-box pro-card tilt-card">
-                    <div class="stat-num">4+</div>
-                    <div class="stat-label">INTERNSHIPS</div>
-                </div>
-                <div class="stat-box pro-card tilt-card">
-                    <div class="stat-num">10+</div>
-                    <div class="stat-label">CERTIFICATIONS</div>
-                </div>
-                <div class="stat-box pro-card tilt-card">
-                    <div class="stat-num">8.0</div>
-                    <div class="stat-label">ACADEMIC CGPA</div>
-                </div>
-                <div class="stat-box pro-card tilt-card">
-                    <div class="stat-num">2+</div>
-                    <div class="stat-label">MAJOR PROJECTS</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container" style="margin-top: 100px; position: relative; z-index: 5;">
-            <div class="featured-project pro-card reveal">
-                <div class="project-top">
-                    <div class="project-status">⭐ FEATURED SYSTEM PROJECT</div>
-                </div>
-                <h3 class="text-gradient">AI & IoT Enabled smart healthcare assistant</h3>
-                <p style="color: var(--muted); margin-top: 8px; line-height: 1.6;">
-                    An advanced embedded infrastructure designed to monitor and parse remote diagnostics data using smart sensors, providing instant cloud analytical logs to healthcare nodes.
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title"><span class="number">01.</span> Core Domains</h2>
+                <p class="section-subtitle">
+                    The four areas I keep coming back to — across coursework, internships, and side builds.
                 </p>
-                <a href="projects.html" class="view-all-link">View All Portfolio Innovations &rarr;</a>
-            </div>
-        </div>
+                <div class="grid grid-3">
+                    <div class="pro-card functional">
+                        <div class="card-icon">🧠</div>
+                        <h3>AI & Machine Learning</h3>
+                        <p>Exploring intelligent systems and ML fundamentals, from predictive models to AI-assisted automation.</p>
+                    </div>
+                    <div class="pro-card functional">
+                        <div class="card-icon">🌐</div>
+                        <h3>IoT & Edge Computing</h3>
+                        <p>Designing sensor networks, microcontroller pipelines, and live cloud-connected monitoring dashboards.</p>
+                    </div>
+                    <div class="pro-card functional">
+                        <div class="card-icon">💻</div>
+                        <h3>Full Stack Development</h3>
+                        <p>Building end-to-end web platforms with HTML, CSS, JavaScript, Java, and Python — UI through to backend logic.</p>
+                    </div>
+                </div>
 
-        <div class="container" style="margin-top: 100px; padding-bottom: 60px; position: relative; z-index: 5;">
-            <div class="cta-banner reveal">
-                <h2 class="cta-title">Let's engineering the future together</h2>
-                <p class="cta-sub">Seeking innovative core opportunities, developer frameworks engagement, and intelligent software deployments.</p>
-                <div class="cta-buttons">
-                    <a href="contact.html" class="btn btn-primary magnet-target">Get In Touch</a>
-                    <a href="about.html" class="btn btn-secondary magnet-target">About My Journey</a>
+                <br><br>
+
+                <div class="focus-pills">
+                    <span>🎯 Currently learning: Full Stack Development</span>
+                    <span>☁️ Cloud Technologies</span>
+                    <span>🤖 AI Applications</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="scroll-cue"><span></span></div>
+        <section class="section">
+            <div class="container">
+
+                <h2 class="section-title"><span class="number">02.</span> Featured Projects</h2>
+                <p class="section-subtitle">
+                    Academic and industry-backed builds solving real healthcare and environmental problems.
+                </p>
+
+                <div class="grid">
+
+                    <div class="pro-card featured-project">
+                        <div class="project-top">
+                            <div class="card-icon" style="margin-bottom:0;">💊</div>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <h3>SafeRx Prescription Verifier</h3>
+                        <p>An IBM-supported healthcare project that validates and verifies medical prescriptions to reduce errors, improve patient safety, and streamline clinical workflows.</p>
+                        <div class="tech-tags">
+                            <span>IBM</span>
+                            <span>Healthcare</span>
+                            <span>Web Application</span>
+                            <span>AI</span>
+                        </div>
+                    </div>
+
+                    <div class="pro-card featured-project">
+                        <div class="project-top">
+                            <div class="card-icon" style="margin-bottom:0;">🌳</div>
+                            <span class="project-status">Completed</span>
+                        </div>
+                        <h3>Deforestation Detection Website</h3>
+                        <p>A web-based environmental monitoring platform that identifies and tracks deforestation activity, built to raise awareness through accessible, data-driven visuals.</p>
+                        <div class="tech-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>Environmental Monitoring</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a href="projects.html" class="view-all-link">View all projects →</a>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+
+                <h2 class="section-title"><span class="number">03.</span> Professional Experience</h2>
+                <p class="section-subtitle">
+                    Six internships across full stack, AI, IoT, design, and data — each one teaching a different slice of the stack.
+                </p>
+
+                <div class="grid">
+
+                    <div class="pro-card">
+                        <div class="card-icon">🗄️</div>
+                        <h3>Project Data Management Intern</h3>
+                        <p>IGEN • 1 Year<br>Streamlined structured and unstructured dataset processing to support database integrity and rapid asset retrieval.</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🎨</div>
+                        <h3>UI/UX Design Intern</h3>
+                        <p>Shrishti Campus Technopark • 15 Days<br>Engineered mid-to-high fidelity wireframes and interactive mobile prototypes using Figma.</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🤖</div>
+                        <h3>AI & Robotics Intern</h3>
+                        <p>Robomatic, Coimbatore<br>Integrated ML algorithms with autonomous robotic hardware for automation and obstacle-evasion mapping.</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">📡</div>
+                        <h3>IoT Intern</h3>
+                        <p>Industrial Training Program<br>Built IoT automation systems across microcontroller architectures, sensor networks, and live cloud dashboards.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+
+                <h2 class="section-title"><span class="number">04.</span> Achievements</h2>
+                <p class="section-subtitle">
+                    Recognition earned through competitions, conferences, and community work.
+                </p>
+
+                <div class="grid">
+
+                    <div class="pro-card">
+                        <div class="card-icon">🏆</div>
+                        <h3>First Prize</h3>
+                        <p>Paper Presentation</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🏆</div>
+                        <h3>First Prize</h3>
+                        <p>Poster Presentation</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🌍</div>
+                        <h3>International Conference</h3>
+                        <p>Participant</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🎓</div>
+                        <h3>National Conference</h3>
+                        <p>Participant</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">⚡</div>
+                        <h3>Hackathons</h3>
+                        <p>2 Participations</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">☁️</div>
+                        <h3>NPTEL</h3>
+                        <p>Cloud Computing Certified</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🧭</div>
+                        <h3>Rajyapuraskar Award</h3>
+                        <p>Governor Scouts & Guides</p>
+                    </div>
+
+                    <div class="pro-card">
+                        <div class="card-icon">🤝</div>
+                        <h3>IGEN</h3>
+                        <p>Volunteer & Donor Member</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="cta-banner">
+                    <h2 class="cta-title">Let's build something together</h2>
+                    <p class="cta-sub">Open to internships, collaborations, and full stack / AI projects. Reach out — I reply fast.</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn btn-primary">✉️ Get In Touch</a>
+                        <a href="https://github.com/nidhishj100" target="_blank" class="btn btn-secondary">💻 GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-left">
-                <h3>Nidhish J<span class="dot">.</span></h3>
-                <p>Computer Science Engineering Student specializing in Full Stack Architectures & Intelligent Core System Integrations.</p>
+                <h2>Nidhish J<span class="dot">.</span></h2>
+                <p>Computer Science Engineering Student | Full Stack Developer | AI Enthusiast</p>
+            </div>
+            <div class="footer-center">
+                <h4>Navigation</h4>
                 <div class="footer-links">
                     <a href="index.html">Home</a>
                     <a href="about.html">About</a>
@@ -780,9 +519,9 @@
                 </div>
             </div>
             <div class="footer-right">
-                <h4>Terminal Location</h4>
+                <h4>Terminal</h4>
                 <p>nidhishj100@gmail.com</p>
-                <p>Kerala / Tamil Nadu || India</p>
+                <p>Kerala , Tamil Nadu || India</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -791,93 +530,5 @@
     </footer>
 
     <script src="js/script.js"></script>
-    <script>
-        // ═══════════════════════════════════════
-        // LOCAL OVERLAY POP ANIMATION DISMISSAL
-        // ═══════════════════════════════════════
-        document.addEventListener('DOMContentLoaded', () => {
-            const overlay = document.getElementById('bubble-overlay');
-            if (overlay) {
-                // Generate entrance bubbles dynamically
-                for (let i = 0; i < 12; i++) {
-                    const b = document.createElement('div');
-                    b.className = 'entry-bubble';
-                    const size = Math.random() * 80 + 40;
-                    b.style.width = `${size}px`;
-                    b.style.height = `${size}px`;
-                    b.style.left = `${Math.random() * 100}%`;
-                    b.style.background = i % 2 === 0 ? '#00e5ff' : '#7c3aed';
-                    b.style.setProperty('--dur', `${Math.random() * 0.8 + 0.8}s`);
-                    b.style.setProperty('--delay', `${Math.random() * 0.4}s`);
-                    overlay.appendChild(b);
-                }
-                
-                // Add fade trigger class safely
-                setTimeout(() => {
-                    overlay.classList.add('fading');
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                    }, 1600);
-                }, 500);
-            }
-        });
-
-        // ═══════════════════════════════════════
-        // CARD INTERACTIVE 3D TILT EFFECT 
-        // ═══════════════════════════════════════
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                const rotateY = (xs - xc) / 10;
-                const rotateX = -(y - yc) / 10;
-                card.style.transform = `perspective(600px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.03)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
-            });
-        });
-
-        // ═══════════════════════════════════════
-        // INTEGRATED TYPING FRAMEWORK ENGINE
-        // ═══════════════════════════════════════
-        const typingElement = document.querySelector('.typing-subtitle');
-        if (typingElement) {
-            const roles = ["Full Stack Developer", "AI Enthusiast", "UI/UX Designer", "Cloud Computing Learner", "IoT Developer"];
-            let roleIndex = 0, charIndex = 0, isDeleting = false;
-            function typeEffect() {
-                const current = roles[roleIndex];
-                typingElement.textContent = current.substring(0, isDeleting ? charIndex - 1 : charIndex + 1);
-                isDeleting ? charIndex-- : charIndex++;
-                let speed = isDeleting ? 50 : 100;
-                if (!isDeleting && charIndex === current.length) { speed = 1800; isDeleting = true; }
-                else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; speed = 500; }
-                setTimeout(typeEffect, speed);
-            }
-            setTimeout(typeEffect, 1500);
-        }
-
-        // ═══════════════════════════════════════
-        // CLICK MOUSE GENERATOR SPARKLE EMITTER
-        // ═══════════════════════════════════════
-        window.addEventListener('click', (e) => {
-            for (let i = 0; i < 8; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                const size = Math.random() * 6 + 2;
-                sparkle.style.width = `${size}px`;
-                sparkle.style.height = `${size}px`;
-                sparkle.style.left = `${e.clientX}px`;
-                sparkle.style.top = `${e.clientY}px`;
-                sparkle.style.background = Math.random() > 0.5 ? '#00e5ff' : '#7c3aed';
-                sparkle.style.transform = `translate(${(Math.random() - 0.5) * 60}px, ${(Math.random() - 0.5) * 60}px)`;
-                document.body.appendChild(sparkle);
-                setTimeout(() => sparkle.remove(), 1200);
-            }
-        });
-    </script>
 </body>
 </html>
